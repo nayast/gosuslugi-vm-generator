@@ -1,0 +1,1 @@
+# gosuslugi-vm-generator

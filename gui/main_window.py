@@ -1,11 +1,13 @@
 from PySide6.QtWidgets import (QMainWindow, QWidget, QVBoxLayout, QHBoxLayout,
                                QLabel, QLineEdit, QPushButton, QFileDialog, QPlainTextEdit,
-                               QGroupBox, QListWidget, QAbstractItemView, QSplitter)
+                               QGroupBox, QListWidget, QAbstractItemView, QSplitter, QMessageBox)
 from PySide6.QtCore import Qt
 from PySide6.QtGui import QFont
+from PySide6.QtWidgets import QApplication
+import os
 
 class JSONSchemeReader(QGroupBox):
-    def __init__(self):
+    def __init__(self, on_state_change_callback):
         super().__init__()
         self.setTitle("JSON-схема")
         self.header_font = QFont()
@@ -13,21 +15,33 @@ class JSONSchemeReader(QGroupBox):
         self.header_font.setBold(True)
         self.setFont(self.header_font)
 
+        self.on_state_change_callback = on_state_change_callback
+
         layout = QVBoxLayout(self)
-        layout.addStretch() # Растягивающий элемент сверху
+        layout.addStretch()
 
         self.line_edit = QLineEdit()
         self.line_edit.setReadOnly(True)
         self.line_edit.setVisible(False)
 
         self.button = QPushButton("Загрузить...")
-        size_policy = self.button.sizePolicy()
-        size_policy.setHorizontalPolicy(size_policy.Policy.Expanding) # Растягивание по ширине
-        self.button.setSizePolicy(size_policy)
 
         layout.addWidget(self.line_edit)
         layout.addWidget(self.button, alignment=Qt.AlignmentFlag.AlignHCenter | Qt.AlignmentFlag.AlignBottom)
-        layout.setAlignment(Qt.AlignmentFlag.AlignHCenter | Qt.AlignmentFlag.AlignBottom) # Выравнивание содержимого
+        layout.setAlignment(Qt.AlignmentFlag.AlignHCenter | Qt.AlignmentFlag.AlignBottom)
+
+        self.button.clicked.connect(self._on_button_clicked)
+
+    def _on_button_clicked(self):
+        file_path, _ = QFileDialog.getOpenFileName(
+            self,
+            "Выберите JSON-схему формы",
+            "",
+            "JSON Files (*.json);;All Files (*)"
+        )
+        if file_path:
+            self.set_path(file_path)
+            self.on_state_change_callback()
 
     def get_path(self):
         return self.line_edit.text()
@@ -58,7 +72,7 @@ class JSONAppItem(QWidget):
 
 
 class JSONAppsReader(QGroupBox):
-    def __init__(self):
+    def __init__(self, on_state_change_callback):
         super().__init__()
         self.setTitle("JSON-примеры")
         self.header_font = QFont()
@@ -66,8 +80,10 @@ class JSONAppsReader(QGroupBox):
         self.header_font.setBold(True)
         self.setFont(self.header_font)
 
+        self.on_state_change_callback = on_state_change_callback
+
         layout = QVBoxLayout(self)
-        layout.addStretch() # Растягивающий элемент сверху
+        layout.addStretch()
 
         self.items_layout = QVBoxLayout()
         self.items_widget = QWidget()
@@ -75,13 +91,10 @@ class JSONAppsReader(QGroupBox):
         self.items_widget.setVisible(False)
 
         self.add_button = QPushButton("Добавить файл...")
-        size_policy = self.add_button.sizePolicy()
-        size_policy.setHorizontalPolicy(size_policy.Policy.Expanding) # Растягивание по ширине
-        self.add_button.setSizePolicy(size_policy)
 
         layout.addWidget(self.items_widget)
         layout.addWidget(self.add_button, alignment=Qt.AlignmentFlag.AlignHCenter | Qt.AlignmentFlag.AlignBottom)
-        layout.setAlignment(Qt.AlignmentFlag.AlignHCenter | Qt.AlignmentFlag.AlignBottom) # Выравнивание содержимого
+        layout.setAlignment(Qt.AlignmentFlag.AlignHCenter | Qt.AlignmentFlag.AlignBottom)
 
         self.add_button.clicked.connect(self._on_add_clicked)
         self._file_paths = set()
@@ -97,6 +110,7 @@ class JSONAppsReader(QGroupBox):
                 self._file_paths.add(path)
 
         self.items_widget.setVisible(bool(self._file_paths))
+        self.on_state_change_callback()
 
     def _on_add_clicked(self):
         file_paths, _ = QFileDialog.getOpenFileNames(
@@ -107,7 +121,6 @@ class JSONAppsReader(QGroupBox):
         )
         if file_paths:
             self.add_paths(file_paths)
-            print(f"Добавлены примеры заявления: {file_paths}")
 
     def _on_item_removed(self, path):
         for i in range(self.items_layout.count()):
@@ -118,10 +131,11 @@ class JSONAppsReader(QGroupBox):
                 break
 
         self.items_widget.setVisible(bool(self._file_paths))
+        self.on_state_change_callback()
 
 
 class XSDSchemeReader(QGroupBox):
-    def __init__(self):
+    def __init__(self, on_state_change_callback):
         super().__init__()
         self.setTitle("XSD-схема")
         self.header_font = QFont()
@@ -129,21 +143,33 @@ class XSDSchemeReader(QGroupBox):
         self.header_font.setBold(True)
         self.setFont(self.header_font)
 
+        self.on_state_change_callback = on_state_change_callback
+
         layout = QVBoxLayout(self)
-        layout.addStretch() # Растягивающий элемент сверху
+        layout.addStretch()
 
         self.line_edit = QLineEdit()
         self.line_edit.setReadOnly(True)
         self.line_edit.setVisible(False)
 
         self.button = QPushButton("Загрузить...")
-        size_policy = self.button.sizePolicy()
-        size_policy.setHorizontalPolicy(size_policy.Policy.Expanding) # Растягивание по ширине
-        self.button.setSizePolicy(size_policy)
 
         layout.addWidget(self.line_edit)
         layout.addWidget(self.button, alignment=Qt.AlignmentFlag.AlignHCenter | Qt.AlignmentFlag.AlignBottom)
-        layout.setAlignment(Qt.AlignmentFlag.AlignHCenter | Qt.AlignmentFlag.AlignBottom) # Выравнивание содержимого
+        layout.setAlignment(Qt.AlignmentFlag.AlignHCenter | Qt.AlignmentFlag.AlignBottom)
+
+        self.button.clicked.connect(self._on_button_clicked)
+
+    def _on_button_clicked(self):
+        file_path, _ = QFileDialog.getOpenFileName(
+            self,
+            "Выберите XSD-схему ведомства",
+            "",
+            "XSD Files (*.xsd);;All Files (*)"
+        )
+        if file_path:
+            self.set_path(file_path)
+            self.on_state_change_callback()
 
     def get_path(self):
         return self.line_edit.text()
@@ -163,19 +189,22 @@ class VMGeneratorBlock(QGroupBox):
         self.setFont(self.header_font)
 
         layout = QVBoxLayout(self)
-        layout.addStretch() # Растягивающий элемент сверху
-        layout.setContentsMargins(9, 25, 9, 9) # Уменьшаем отступы
+        layout.addStretch()
+        layout.setContentsMargins(9, 25, 9, 9)
 
         self.button = QPushButton("Сгенерировать шаблон")
         size_policy = self.button.sizePolicy()
-        size_policy.setHorizontalPolicy(size_policy.Policy.Expanding) # Растягивание по ширине
+        size_policy.setHorizontalPolicy(size_policy.Policy.Expanding)
         self.button.setSizePolicy(size_policy)
 
         layout.addWidget(self.button, alignment=Qt.AlignmentFlag.AlignHCenter | Qt.AlignmentFlag.AlignBottom)
-        layout.setAlignment(Qt.AlignmentFlag.AlignHCenter | Qt.AlignmentFlag.AlignBottom) # Выравнивание содержимого
+        layout.setAlignment(Qt.AlignmentFlag.AlignHCenter | Qt.AlignmentFlag.AlignBottom)
 
     def connect_generate_signal(self, slot):
         self.button.clicked.connect(slot)
+
+    def set_enabled(self, enabled):
+        self.button.setEnabled(enabled)
 
 
 class VMTemplateViewer(QGroupBox):
@@ -192,13 +221,32 @@ class VMTemplateViewer(QGroupBox):
         self.text_edit = QPlainTextEdit()
         self.text_edit.setReadOnly(True)
 
+        self.button_layout = QHBoxLayout()
+        self.copy_button = QPushButton("Копировать в буфер")
+        self.save_button = QPushButton("Сохранить как файл...")
+        self.copy_button.setVisible(False)
+        self.save_button.setVisible(False)
+
+        self.button_layout.addWidget(self.copy_button)
+        self.button_layout.addWidget(self.save_button)
+
         layout.addWidget(self.text_edit)
+        layout.addLayout(self.button_layout)
 
     def set_content(self, content):
         self.text_edit.setPlainText(content)
+        has_content = bool(content.strip())
+        self.copy_button.setVisible(has_content)
+        self.save_button.setVisible(has_content)
 
     def get_content(self):
         return self.text_edit.toPlainText()
+
+    def connect_copy_signal(self, slot):
+        self.copy_button.clicked.connect(slot)
+
+    def connect_save_signal(self, slot):
+        self.save_button.clicked.connect(slot)
 
 
 class MainWindow(QMainWindow):
@@ -218,12 +266,11 @@ class MainWindow(QMainWindow):
         self.left_widget.setTitle("Загрузка файлов")
         self.left_layout = QVBoxLayout(self.left_widget)
 
-        self.json_schema_reader = JSONSchemeReader()
-        self.json_apps_reader = JSONAppsReader()
-        self.xsd_scheme_reader = XSDSchemeReader()
+        self.json_schema_reader = JSONSchemeReader(self._on_file_state_changed)
+        self.json_apps_reader = JSONAppsReader(self._on_file_state_changed)
+        self.xsd_scheme_reader = XSDSchemeReader(self._on_file_state_changed)
         self.vm_generator_block = VMGeneratorBlock()
 
-        # Устанавливаем политику размера для минимизации высоты блоков
         json_schema_size_policy = self.json_schema_reader.sizePolicy()
         json_schema_size_policy.setVerticalPolicy(json_schema_size_policy.Policy.Minimum)
         self.json_schema_reader.setSizePolicy(json_schema_size_policy)
@@ -248,42 +295,106 @@ class MainWindow(QMainWindow):
         splitter.addWidget(self.left_widget)
 
         self.vm_template_viewer = VMTemplateViewer()
+        self.vm_template_viewer.connect_copy_signal(self.copy_template)
+        self.vm_template_viewer.connect_save_signal(self.save_template)
         splitter.addWidget(self.vm_template_viewer)
 
         splitter.setSizes([splitter.width() // 2, splitter.width() // 2])
 
-        self.json_schema_reader.button.clicked.connect(self.load_form_schema)
-        self.xsd_scheme_reader.button.clicked.connect(self.load_department_xsd)
         self.vm_generator_block.connect_generate_signal(self.generate_template)
+        self._on_file_state_changed()
 
-    def load_form_schema(self):
-        file_path, _ = QFileDialog.getOpenFileName(
-            self,
-            "Выберите JSON-схему формы",
-            "",
-            "JSON Files (*.json);;All Files (*)"
-        )
-        if file_path:
-            self.json_schema_reader.set_path(file_path)
-            print(f"Загружена JSON-схема формы: {file_path}")
+    def _on_file_state_changed(self):
+        schema_loaded = bool(self.json_schema_reader.get_path())
+        examples_loaded = bool(self.json_apps_reader.get_paths())
+        xsd_loaded = bool(self.xsd_scheme_reader.get_path())
 
-    def load_department_xsd(self):
-        file_path, _ = QFileDialog.getOpenFileName(
-            self,
-            "Выберите XSD-схему ведомства",
-            "",
-            "XSD Files (*.xsd);;All Files (*)"
-        )
-        if file_path:
-            self.xsd_scheme_reader.set_path(file_path)
-            print(f"Загружена XSD-схема ведомства: {file_path}")
+        all_loaded = schema_loaded and examples_loaded and xsd_loaded
+        self.vm_generator_block.set_enabled(all_loaded)
 
     def generate_template(self):
-        print("Нажата кнопка 'Сгенерировать шаблон'")
         schema_path = self.json_schema_reader.get_path()
         example_paths = self.json_apps_reader.get_paths()
         xsd_path = self.xsd_scheme_reader.get_path()
 
-        print(f"JSON Schema Path: {schema_path}")
-        print(f"Example JSON Paths: {example_paths}")
-        print(f"XSD Path: {xsd_path}")
+        # Проверка существования файлов
+        missing_files = []
+        files_to_clear = {'schema': False, 'examples': [], 'xsd': False}
+
+        if schema_path and not os.path.exists(schema_path):
+            missing_files.append(schema_path)
+            files_to_clear['schema'] = True
+        if xsd_path and not os.path.exists(xsd_path):
+            missing_files.append(xsd_path)
+            files_to_clear['xsd'] = True
+
+        for path in example_paths[:]: # Используем срез, чтобы избежать проблем при изменении списка во время итерации
+            if not os.path.exists(path):
+                missing_files.append(path)
+                files_to_clear['examples'].append(path)
+                example_paths.remove(path) # Удаляем несуществующий путь из списка
+
+        # Удаляем несуществующие файлы из интерфейса
+        if missing_files:
+            # Показываем сообщение об ошибке
+            msg_box = QMessageBox()
+            msg_box.setIcon(QMessageBox.Icon.Warning)
+            msg_box.setWindowTitle("Ошибка")
+            msg_box.setText("Некоторые файлы не найдены:")
+            msg_box.setDetailedText("\n".join(missing_files))
+            msg_box.exec()
+
+            # Очищаем JSON-схему, если она не существует
+            if files_to_clear['schema']:
+                self.json_schema_reader.set_path("")
+            # Очищаем XSD-схему, если она не существует
+            if files_to_clear['xsd']:
+                self.xsd_scheme_reader.set_path("")
+            # Удаляем несуществующие файлы из JSON-примеров
+            if files_to_clear['examples']:
+                self.json_apps_reader._file_paths = set(example_paths)
+                # Удаляем виджеты для несуществующих файлов
+                for i in range(self.json_apps_reader.items_layout.count() - 1, -1, -1):
+                    item_widget = self.json_apps_reader.items_layout.itemAt(i).widget()
+                    if isinstance(item_widget, JSONAppItem) and item_widget.file_path in files_to_clear['examples']:
+                        item_widget.setParent(None)
+                # Обновляем видимость списка
+                self.json_apps_reader.items_widget.setVisible(bool(example_paths))
+
+            # Обновляем состояния кнопок
+            self._on_file_state_changed()
+            return # Прерываем генерацию
+
+        #todo: поменять на логику по генерации шаблона.
+        try:
+            with open('gui/example.xml', 'r', encoding='utf-8') as f:
+                template_content = f.read()
+            self.vm_template_viewer.set_content(template_content)
+        except FileNotFoundError:
+            self.vm_template_viewer.set_content("Ошибка: файл 'gui/example.xml' не найден.")
+        except Exception as e:
+            self.vm_template_viewer.set_content(f"Ошибка при чтении шаблона: {e}")
+
+    def copy_template(self):
+        clipboard = QApplication.clipboard()
+        template_text = self.vm_template_viewer.get_content()
+        if template_text:
+            clipboard.setText(template_text)
+
+    def save_template(self):
+        template_text = self.vm_template_viewer.get_content()
+        if not template_text:
+            return
+
+        file_path, _ = QFileDialog.getSaveFileName(
+            self,
+            "Сохранить VM-шаблон",
+            "xxxxxxxxx_Applicant.vm",
+            "VM Files (*.vm);;All Files (*)"
+        )
+        if file_path:
+            try:
+                with open(file_path, 'w', encoding='utf-8') as f:
+                    f.write(template_text)
+            except Exception as e:
+                print(f"Ошибка при сохранении шаблона: {e}")

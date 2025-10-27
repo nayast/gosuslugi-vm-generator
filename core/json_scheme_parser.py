@@ -13,11 +13,13 @@ def _get_fields(_value):
         if _value.get("id"):
             return [_value["id"],]
         for key, value in _value.items():
-            fields += _get_fields(value)
+            fields.extend(_get_fields(value))
 
     elif isinstance(_value, list):
-        for value in _value:
-            fields += _get_fields(value)
+        try:
+            for value in _value:
+                fields.extend(_get_fields(value))
+        except: pass
     else:
         return []
     return fields

@@ -18,19 +18,22 @@ class JSONSchemeReader(QGroupBox):
         self.on_state_change_callback = on_state_change_callback
 
         layout = QVBoxLayout(self)
-        layout.addStretch()
-
         self.line_edit = QLineEdit()
         self.line_edit.setReadOnly(True)
         self.line_edit.setVisible(False)
-        self.line_edit.setStyleSheet("background-color: #E5EAF5; color: #000000; border: none;") # Серый фон, чёрный текст, без рамки
-
-        self.button = QPushButton("Загрузить...")
-        self.button.setStyleSheet("background-color: #0D4CD3; color: #FFFFFF;") # Синий фон, белый текст
+        self.line_edit.setStyleSheet("background-color: #E5EAF5; color: #000000; border: none;")
 
         layout.addWidget(self.line_edit)
-        layout.addWidget(self.button, alignment=Qt.AlignmentFlag.AlignHCenter | Qt.AlignmentFlag.AlignBottom)
-        layout.setAlignment(Qt.AlignmentFlag.AlignHCenter | Qt.AlignmentFlag.AlignBottom)
+
+        layout.addStretch()
+
+        self.button = QPushButton("Загрузить...")
+        self.button.setStyleSheet("background-color: #0D4CD3; color: #FFFFFF;")
+        size_policy = self.button.sizePolicy()
+        size_policy.setHorizontalPolicy(size_policy.Policy.Expanding)
+        self.button.setSizePolicy(size_policy)
+
+        layout.addWidget(self.button)
 
         self.button.clicked.connect(self._on_button_clicked)
 
@@ -61,8 +64,9 @@ class JSONAppItem(QWidget):
 
         layout = QHBoxLayout(self)
         self.label = QLabel(file_path)
-        self.label.setStyleSheet("background-color: #E5EAF5; color: #000000; border: none;") # Серый фон, чёрный текст, без рамки
+        self.label.setStyleSheet("background-color: #E5EAF5; color: #000000; border: none;")
         self.remove_button = QPushButton("✕")
+        self.remove_button.setStyleSheet("background-color: transparent; color: #0D4CD3; border: none;")
         self.remove_button.setFixedSize(30, 30)
 
         layout.addWidget(self.label)
@@ -86,19 +90,23 @@ class JSONAppsReader(QGroupBox):
         self.on_state_change_callback = on_state_change_callback
 
         layout = QVBoxLayout(self)
-        layout.addStretch()
 
         self.items_layout = QVBoxLayout()
         self.items_widget = QWidget()
         self.items_widget.setLayout(self.items_layout)
         self.items_widget.setVisible(False)
 
-        self.add_button = QPushButton("Добавить файл...")
-        self.add_button.setStyleSheet("background-color: transparent; border: 1px dashed #0D4CD3; color: #0D4CD3;") # Прозрачный фон, синяя пунктирная рамка, синий текст
-
         layout.addWidget(self.items_widget)
-        layout.addWidget(self.add_button, alignment=Qt.AlignmentFlag.AlignHCenter | Qt.AlignmentFlag.AlignBottom)
-        layout.setAlignment(Qt.AlignmentFlag.AlignHCenter | Qt.AlignmentFlag.AlignBottom)
+
+        layout.addStretch()
+
+        self.add_button = QPushButton("Добавить файл...")
+        self.add_button.setStyleSheet("background-color: transparent; border: 3px dashed #0D4CD3; color: #0D4CD3;")
+        size_policy = self.add_button.sizePolicy()
+        size_policy.setHorizontalPolicy(size_policy.Policy.Expanding)
+        self.add_button.setSizePolicy(size_policy)
+
+        layout.addWidget(self.add_button)
 
         self.add_button.clicked.connect(self._on_add_clicked)
         self._file_paths = set()
@@ -106,7 +114,7 @@ class JSONAppsReader(QGroupBox):
     def get_paths(self):
         return list(self._file_paths)
 
-    def add_paths(self, paths):
+    def     add_paths(self, paths):
         for path in paths:
             if path not in self._file_paths:
                 item = JSONAppItem(path, self._on_item_removed)
@@ -150,19 +158,23 @@ class XSDSchemeReader(QGroupBox):
         self.on_state_change_callback = on_state_change_callback
 
         layout = QVBoxLayout(self)
-        layout.addStretch()
 
         self.line_edit = QLineEdit()
         self.line_edit.setReadOnly(True)
         self.line_edit.setVisible(False)
-        self.line_edit.setStyleSheet("background-color: #E5EAF5; color: #000000; border: none;") # Серый фон, чёрный текст, без рамки
-
-        self.button = QPushButton("Загрузить...")
-        self.button.setStyleSheet("background-color: #0D4CD3; color: #FFFFFF;") # Синий фон, белый текст
+        self.line_edit.setStyleSheet("background-color: #E5EAF5; color: #000000; border: none;")
 
         layout.addWidget(self.line_edit)
-        layout.addWidget(self.button, alignment=Qt.AlignmentFlag.AlignHCenter | Qt.AlignmentFlag.AlignBottom)
-        layout.setAlignment(Qt.AlignmentFlag.AlignHCenter | Qt.AlignmentFlag.AlignBottom)
+
+        layout.addStretch()
+
+        self.button = QPushButton("Загрузить...")
+        self.button.setStyleSheet("background-color: #0D4CD3; color: #FFFFFF;")
+        size_policy = self.button.sizePolicy()
+        size_policy.setHorizontalPolicy(size_policy.Policy.Expanding)
+        self.button.setSizePolicy(size_policy)
+
+        layout.addWidget(self.button)
 
         self.button.clicked.connect(self._on_button_clicked)
 
@@ -195,23 +207,24 @@ class VMGeneratorBlock(QGroupBox):
         self.setFont(self.header_font)
 
         layout = QVBoxLayout(self)
-        layout.addStretch()
-        layout.setContentsMargins(9, 25, 9, 9)
 
         self.button = QPushButton("Сгенерировать шаблон")
         size_policy = self.button.sizePolicy()
         size_policy.setHorizontalPolicy(size_policy.Policy.Expanding)
         self.button.setSizePolicy(size_policy)
-        self.button.setStyleSheet("background-color: #EE3F58; color: #FFFFFF;") # Красный фон, белый текст
+        self.button.setStyleSheet("background-color: #EE3F58; color: #FFFFFF;")
 
-        layout.addWidget(self.button, alignment=Qt.AlignmentFlag.AlignHCenter | Qt.AlignmentFlag.AlignBottom)
-        layout.setAlignment(Qt.AlignmentFlag.AlignHCenter | Qt.AlignmentFlag.AlignBottom)
+        layout.addWidget(self.button)
 
     def connect_generate_signal(self, slot):
         self.button.clicked.connect(slot)
 
     def set_enabled(self, enabled):
         self.button.setEnabled(enabled)
+        if enabled:
+            self.button.setStyleSheet("background-color: #EE3F58; color: #FFFFFF;")
+        else:
+            self.button.setStyleSheet("background-color: #66727F; color: #FFFFFF;")
 
 
 class VMTemplateViewer(QGroupBox):
@@ -227,15 +240,15 @@ class VMTemplateViewer(QGroupBox):
 
         self.text_edit = QPlainTextEdit()
         self.text_edit.setReadOnly(True)
-        self.text_edit.setStyleSheet("background-color: #E5EAF5; color: #000000;") # Серый фон, чёрный текст
+        self.text_edit.setStyleSheet("background-color: #E5EAF5; color: #000000;")
 
         self.button_layout = QHBoxLayout()
         self.copy_button = QPushButton("Копировать в буфер")
         self.save_button = QPushButton("Сохранить как файл...")
         self.copy_button.setVisible(False)
         self.save_button.setVisible(False)
-        self.copy_button.setStyleSheet("background-color: #0D4CD3; color: #FFFFFF;") # Синий фон, белый текст
-        self.save_button.setStyleSheet("background-color: #0D4CD3; color: #FFFFFF;") # Синий фон, белый текст
+        self.copy_button.setStyleSheet("background-color: #0D4CD3; color: #FFFFFF;")
+        self.save_button.setStyleSheet("background-color: #0D4CD3; color: #FFFFFF;")
 
         self.button_layout.addWidget(self.copy_button)
         self.button_layout.addWidget(self.save_button)
@@ -264,8 +277,7 @@ class MainWindow(QMainWindow):
         super().__init__()
         self.setWindowTitle("Генератор VM-шаблонов")
         self.setGeometry(100, 100, 1200, 700)
-        # Устанавливаем стиль для всего окна
-        self.setStyleSheet("background-color: #FFFFFF;") # Белый фон
+        self.setStyleSheet("background-color: #FFFFFF;")
 
         central_widget = QWidget()
         self.setCentralWidget(central_widget)
@@ -279,18 +291,18 @@ class MainWindow(QMainWindow):
         self.left_widget.setStyleSheet("""
             QGroupBox {
                 background-color: #FFFFFF;
-                color: #000000; /* Цвет заголовка */
-                border: 1px solid #000000; /* Цвет рамки */
+                color: #000000;
+                border: 1px solid #000000;
                 border-radius: 5px;
-                margin-top: 1ex; /* Отступ сверху для текста заголовка */
+                margin-top: 1ex;
             }
             QGroupBox::title {
                 subcontrol-origin: margin;
                 left: 10px;
-                padding: 0 5px 0 5px; /* Отступы вокруг текста заголовка */
-                color: #000000; /* Цвет текста заголовка */
+                padding: 0 5px 0 5px;
+                color: #000000;
             }
-        """) # Белый фон, чёрный заголовок и рамка
+        """)
         self.left_layout = QVBoxLayout(self.left_widget)
 
         self.json_schema_reader = JSONSchemeReader(self._on_file_state_changed)
@@ -324,18 +336,18 @@ class MainWindow(QMainWindow):
         self.vm_template_viewer = VMTemplateViewer()
         self.vm_template_viewer.setStyleSheet("""
             QGroupBox {
-                color: #000000; /* Цвет заголовка */
-                border: 1px solid #000000; /* Цвет рамки */
+                color: #000000;
+                border: 1px solid #000000;
                 border-radius: 5px;
-                margin-top: 1ex; /* Отступ сверху для текста заголовка */
+                margin-top: 1ex;
             }
             QGroupBox::title {
                 subcontrol-origin: margin;
                 left: 10px;
-                padding: 0 5px 0 5px; /* Отступы вокруг текста заголовка */
-                color: #000000; /* Цвет текста заголовка */
+                padding: 0 5px 0 5px;
+                color: #000000;
             }
-        """) # Чёрный заголовок и рамка
+        """)
         self.vm_template_viewer.connect_copy_signal(self.copy_template)
         self.vm_template_viewer.connect_save_signal(self.save_template)
         splitter.addWidget(self.vm_template_viewer)
@@ -358,7 +370,6 @@ class MainWindow(QMainWindow):
         example_paths = self.json_apps_reader.get_paths()
         xsd_path = self.xsd_scheme_reader.get_path()
 
-        # Проверка существования файлов
         missing_files = []
         files_to_clear = {'schema': False, 'examples': [], 'xsd': False}
 
@@ -369,15 +380,13 @@ class MainWindow(QMainWindow):
             missing_files.append(xsd_path)
             files_to_clear['xsd'] = True
 
-        for path in example_paths[:]: # Используем срез, чтобы избежать проблем при изменении списка во время итерации
+        for path in example_paths[:]:
             if not os.path.exists(path):
                 missing_files.append(path)
                 files_to_clear['examples'].append(path)
-                example_paths.remove(path) # Удаляем несуществующий путь из списка
+                example_paths.remove(path)
 
-        # Удаляем несуществующие файлы из интерфейса
         if missing_files:
-            # Показываем сообщение об ошибке
             msg_box = QMessageBox()
             msg_box.setIcon(QMessageBox.Icon.Warning)
             msg_box.setWindowTitle("Ошибка")
@@ -385,26 +394,20 @@ class MainWindow(QMainWindow):
             msg_box.setDetailedText("\n".join(missing_files))
             msg_box.exec()
 
-            # Очищаем JSON-схему, если она не существует
             if files_to_clear['schema']:
                 self.json_schema_reader.set_path("")
-            # Очищаем XSD-схему, если она не существует
             if files_to_clear['xsd']:
                 self.xsd_scheme_reader.set_path("")
-            # Удаляем несуществующие файлы из JSON-примеров
             if files_to_clear['examples']:
                 self.json_apps_reader._file_paths = set(example_paths)
-                # Удаляем виджеты для несуществующих файлов
                 for i in range(self.json_apps_reader.items_layout.count() - 1, -1, -1):
                     item_widget = self.json_apps_reader.items_layout.itemAt(i).widget()
                     if isinstance(item_widget, JSONAppItem) and item_widget.file_path in files_to_clear['examples']:
                         item_widget.setParent(None)
-                # Обновляем видимость списка
                 self.json_apps_reader.items_widget.setVisible(bool(example_paths))
 
-            # Обновляем состояния кнопок
             self._on_file_state_changed()
-            return # Прерываем генерацию
+            return
 
         #todo: поменять на логику по генерации шаблона.
         try:

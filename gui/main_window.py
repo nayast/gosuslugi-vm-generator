@@ -3,15 +3,158 @@ from PySide6.QtWidgets import (QApplication, QMainWindow, QWidget, QVBoxLayout, 
                                QLabel, QLineEdit, QPushButton, QFileDialog, QPlainTextEdit,
                                QGroupBox, QListWidget, QAbstractItemView, QSplitter)
 from PySide6.QtCore import Qt
+from PySide6.QtGui import QFont
+
+class JSONSchemeReader(QWidget):
+    def __init__(self):
+        super().__init__()
+        layout = QVBoxLayout(self)
+
+        self.header_label = QLabel("JSON-схема")
+        header_font = QFont()
+        header_font.setPointSize(12)
+        header_font.setBold(True)
+        self.header_label.setFont(header_font)
+
+        content_layout = QHBoxLayout()
+        self.line_edit = QLineEdit()
+        self.line_edit.setReadOnly(True)
+        self.button = QPushButton("Загрузить...")
+
+        content_layout.addWidget(self.line_edit)
+        content_layout.addWidget(self.button)
+
+        layout.addWidget(self.header_label)
+        layout.addLayout(content_layout)
+
+    def get_path(self):
+        return self.line_edit.text()
+
+    def set_path(self, path):
+        self.line_edit.setText(path)
+
+
+class JSONAppsReader(QWidget):
+    def __init__(self):
+        super().__init__()
+        layout = QVBoxLayout(self)
+
+        self.header_label = QLabel("JSON-примеры")
+        header_font = QFont()
+        header_font.setPointSize(12)
+        header_font.setBold(True)
+        self.header_label.setFont(header_font)
+
+        self.list_widget = QListWidget()
+        self.list_widget.setSelectionMode(QAbstractItemView.SelectionMode.ExtendedSelection)
+
+        button_layout = QHBoxLayout()
+        self.add_button = QPushButton("Добавить файл...")
+        self.clear_button = QPushButton("Очистить список")
+        button_layout.addWidget(self.add_button)
+        button_layout.addWidget(self.clear_button)
+
+        layout.addWidget(self.header_label)
+        layout.addWidget(self.list_widget)
+        layout.addLayout(button_layout)
+
+    def get_paths(self):
+        paths = []
+        for i in range(self.list_widget.count()):
+            item = self.list_widget.item(i)
+            if item:
+                paths.append(item.text())
+        return paths
+
+    def add_paths(self, paths):
+        existing_paths = set(self.get_paths())
+        for path in paths:
+            if path not in existing_paths:
+                self.list_widget.addItem(path)
+
+    def clear_paths(self):
+        self.list_widget.clear()
+
+
+class XSDSchemeReader(QWidget):
+    def __init__(self):
+        super().__init__()
+        layout = QVBoxLayout(self)
+
+        self.header_label = QLabel("XSD-схема")
+        header_font = QFont()
+        header_font.setPointSize(12)
+        header_font.setBold(True)
+        self.header_label.setFont(header_font)
+
+        content_layout = QHBoxLayout()
+        self.line_edit = QLineEdit()
+        self.line_edit.setReadOnly(True)
+        self.button = QPushButton("Загрузить...")
+
+        content_layout.addWidget(self.line_edit)
+        content_layout.addWidget(self.button)
+
+        layout.addWidget(self.header_label)
+        layout.addLayout(content_layout)
+
+    def get_path(self):
+        return self.line_edit.text()
+
+    def set_path(self, path):
+        self.line_edit.setText(path)
+
+
+class VMGeneratorBlock(QWidget):
+    def __init__(self):
+        super().__init__()
+        layout = QVBoxLayout(self)
+
+        self.header_label = QLabel("VM-шаблон")
+        header_font = QFont()
+        header_font.setPointSize(12)
+        header_font.setBold(True)
+        self.header_label.setFont(header_font)
+
+        self.button = QPushButton("Сгенерировать шаблон")
+
+        layout.addWidget(self.header_label)
+        layout.addWidget(self.button)
+
+    def connect_generate_signal(self, slot):
+        self.button.clicked.connect(slot)
+
+
+class VMTemplateViewer(QWidget):
+    def __init__(self):
+        super().__init__()
+        layout = QVBoxLayout(self)
+
+        self.header_label = QLabel("Предпросмотр VM-шаблона")
+        header_font = QFont()
+        header_font.setPointSize(12)
+        header_font.setBold(True)
+        self.header_label.setFont(header_font)
+
+        self.text_edit = QPlainTextEdit()
+        self.text_edit.setReadOnly(True)
+
+        layout.addWidget(self.header_label)
+        layout.addWidget(self.text_edit)
+
+    def set_content(self, content):
+        self.text_edit.setPlainText(content)
+
+    def get_content(self):
+        return self.text_edit.toPlainText()
 
 
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
-        self.setWindowTitle("Генератор VM-шаблонов услуг")
+        self.setWindowTitle("Генератор VM-шаблонов")
         self.setGeometry(100, 100, 1200, 700)
 
-        # Центральный виджет
         central_widget = QWidget()
         self.setCentralWidget(central_widget)
 
@@ -19,110 +162,33 @@ class MainWindow(QMainWindow):
         central_layout = QHBoxLayout(central_widget)
         central_layout.addWidget(splitter)
 
-        # --- ЛЕВЫЙ БЛОК (Загрузка файлов) ---
         left_widget = QWidget()
         left_layout = QVBoxLayout(left_widget)
 
-        # --- Блок 1: JSON-схема формы ---
-        self.form_schema_block = self.create_file_block(
-            "JSON-схема формы с Госуслуг",
-            self.load_form_schema
-        )
-        left_layout.addWidget(self.form_schema_block)
+        self.json_schema_reader = JSONSchemeReader()
+        self.json_apps_reader = JSONAppsReader()
+        self.xsd_scheme_reader = XSDSchemeReader()
 
-        # --- Блок 2: Примеры заявления (JSON) ---
-        self.example_app_block = self.create_multiple_files_block(
-            "Примеры заявления (JSON)",
-            self.add_example_app,
-            self.clear_example_app
-        )
-        left_layout.addWidget(self.example_app_block)
+        left_layout.addWidget(self.json_schema_reader)
+        left_layout.addWidget(self.json_apps_reader)
+        left_layout.addWidget(self.xsd_scheme_reader)
 
-        # --- Блок 3: XSD-схема ведомства ---
-        self.department_xsd_block = self.create_file_block(
-            "XSD-схема ведомственной системы",
-            self.load_department_xsd
-        )
-        left_layout.addWidget(self.department_xsd_block)
+        self.vm_generator_block = VMGeneratorBlock()
+        self.vm_generator_block.connect_generate_signal(self.generate_template)
+        left_layout.addWidget(self.vm_generator_block)
 
-        # --- Кнопка генерации ---
-        self.generate_button = QPushButton("Сгенерировать шаблон")
-        self.generate_button.clicked.connect(self.generate_template)
-        left_layout.addWidget(self.generate_button)
-
-        # Добавляем левый виджет в сплиттер
         splitter.addWidget(left_widget)
 
-        # --- ПРАВЫЙ БЛОК (Предварительный просмотр) ---
-        right_widget = QWidget()
-        right_layout = QVBoxLayout(right_widget)
+        self.vm_template_viewer = VMTemplateViewer()
+        splitter.addWidget(self.vm_template_viewer)
 
-        preview_label = QLabel("Предварительный просмотр VM-шаблона:")
-        preview_label.setText('''
-        
-                            ''')
-        right_layout.addWidget(preview_label)
-
-        self.preview_area = QPlainTextEdit()
-        self.preview_area.setReadOnly(True) # Сделать область только для чтения
-        right_layout.addWidget(self.preview_area)
-
-        # Добавляем правый виджет в сплиттер
-        splitter.addWidget(right_widget)
-
-        # Опционально: Установить начальные пропорции (например, 1:1)
         splitter.setSizes([splitter.width() // 2, splitter.width() // 2])
 
+        self.json_schema_reader.button.clicked.connect(self.load_form_schema)
+        self.json_apps_reader.add_button.clicked.connect(self.add_example_app)
+        self.json_apps_reader.clear_button.clicked.connect(self.clear_example_app)
+        self.xsd_scheme_reader.button.clicked.connect(self.load_department_xsd)
 
-    def create_file_block(self, label_text, load_callback):
-        """Создает блок для загрузки одного файла."""
-        group_box = QGroupBox(label_text)
-        layout = QHBoxLayout(group_box)
-
-        line_edit = QLineEdit()
-        line_edit.setReadOnly(True) # Поле только для чтения
-        layout.addWidget(line_edit)
-
-        button = QPushButton("Загрузить...")
-        button.clicked.connect(load_callback)
-        layout.addWidget(button)
-
-        # Сохраняем ссылки на элементы управления, чтобы к ним можно было обратиться позже
-        group_box.line_edit = line_edit
-        group_box.button = button
-
-        return group_box
-
-    def create_multiple_files_block(self, label_text, add_callback, clear_callback):
-        """Создает блок для загрузки нескольких файлов."""
-        group_box = QGroupBox(label_text)
-        layout = QVBoxLayout(group_box)
-
-        # Список для отображения загруженных файлов
-        self.file_list_widget = QListWidget()
-        self.file_list_widget.setSelectionMode(QAbstractItemView.SelectionMode.ExtendedSelection) # Позволяет выбирать несколько элементов
-        layout.addWidget(self.file_list_widget)
-
-        # Кнопки управления списком
-        button_layout = QHBoxLayout()
-        add_button = QPushButton("Добавить файл...")
-        add_button.clicked.connect(add_callback)
-        button_layout.addWidget(add_button)
-
-        clear_button = QPushButton("Очистить список")
-        clear_button.clicked.connect(clear_callback)
-        button_layout.addWidget(clear_button)
-
-        layout.addLayout(button_layout)
-
-        # Сохраняем ссылки
-        group_box.list_widget = self.file_list_widget
-        group_box.add_button = add_button
-        group_box.clear_button = clear_button
-
-        return group_box
-
-    # --- Функции-заглушки для обработчиков ---
     def load_form_schema(self):
         file_path, _ = QFileDialog.getOpenFileName(
             self,
@@ -131,7 +197,7 @@ class MainWindow(QMainWindow):
             "JSON Files (*.json);;All Files (*)"
         )
         if file_path:
-            self.form_schema_block.line_edit.setText(file_path)
+            self.json_schema_reader.set_path(file_path)
             print(f"Загружена JSON-схема формы: {file_path}")
 
     def add_example_app(self):
@@ -142,16 +208,11 @@ class MainWindow(QMainWindow):
             "JSON Files (*.json);;All Files (*)"
         )
         if file_paths:
-            for path in file_paths:
-                items = []
-                for i in range(self.example_app_block.list_widget.count()):
-                    items.append(self.example_app_block.list_widget.item(i).text())
-                if path not in items:
-                    self.example_app_block.list_widget.addItem(path)
+            self.json_apps_reader.add_paths(file_paths)
             print(f"Добавлены примеры заявления: {file_paths}")
 
     def clear_example_app(self):
-        self.example_app_block.list_widget.clear()
+        self.json_apps_reader.clear_paths()
         print("Список примеров заявления очищен.")
 
     def load_department_xsd(self):
@@ -162,17 +223,15 @@ class MainWindow(QMainWindow):
             "XSD Files (*.xsd);;All Files (*)"
         )
         if file_path:
-            self.department_xsd_block.line_edit.setText(file_path)
+            self.xsd_scheme_reader.set_path(file_path)
             print(f"Загружена XSD-схема ведомства: {file_path}")
 
     def generate_template(self):
         print("Нажата кнопка 'Сгенерировать шаблон'")
-        # Здесь будет вызов логики генерации
-        # После генерации результат можно отобразить в self.preview_area
-        # self.preview_area.setPlainText("Сгенерированный VM-шаблон появится здесь...")
+        schema_path = self.json_schema_reader.get_path()
+        example_paths = self.json_apps_reader.get_paths()
+        xsd_path = self.xsd_scheme_reader.get_path()
 
-
-app = QApplication(sys.argv)
-window = MainWindow()
-window.show()
-sys.exit(app.exec())
+        print(f"JSON Schema Path: {schema_path}")
+        print(f"Example JSON Paths: {example_paths}")
+        print(f"XSD Path: {xsd_path}")

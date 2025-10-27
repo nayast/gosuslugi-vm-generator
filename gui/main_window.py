@@ -114,7 +114,7 @@ class JSONAppsReader(QGroupBox):
     def get_paths(self):
         return list(self._file_paths)
 
-    def     add_paths(self, paths):
+    def add_paths(self, paths):
         for path in paths:
             if path not in self._file_paths:
                 item = JSONAppItem(path, self._on_item_removed)

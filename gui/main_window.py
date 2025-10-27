@@ -23,8 +23,10 @@ class JSONSchemeReader(QGroupBox):
         self.line_edit = QLineEdit()
         self.line_edit.setReadOnly(True)
         self.line_edit.setVisible(False)
+        self.line_edit.setStyleSheet("background-color: #E5EAF5; color: #000000; border: none;") # Серый фон, чёрный текст, без рамки
 
         self.button = QPushButton("Загрузить...")
+        self.button.setStyleSheet("background-color: #0D4CD3; color: #FFFFFF;") # Синий фон, белый текст
 
         layout.addWidget(self.line_edit)
         layout.addWidget(self.button, alignment=Qt.AlignmentFlag.AlignHCenter | Qt.AlignmentFlag.AlignBottom)
@@ -59,6 +61,7 @@ class JSONAppItem(QWidget):
 
         layout = QHBoxLayout(self)
         self.label = QLabel(file_path)
+        self.label.setStyleSheet("background-color: #E5EAF5; color: #000000; border: none;") # Серый фон, чёрный текст, без рамки
         self.remove_button = QPushButton("✕")
         self.remove_button.setFixedSize(30, 30)
 
@@ -91,6 +94,7 @@ class JSONAppsReader(QGroupBox):
         self.items_widget.setVisible(False)
 
         self.add_button = QPushButton("Добавить файл...")
+        self.add_button.setStyleSheet("background-color: transparent; border: 1px dashed #0D4CD3; color: #0D4CD3;") # Прозрачный фон, синяя пунктирная рамка, синий текст
 
         layout.addWidget(self.items_widget)
         layout.addWidget(self.add_button, alignment=Qt.AlignmentFlag.AlignHCenter | Qt.AlignmentFlag.AlignBottom)
@@ -151,8 +155,10 @@ class XSDSchemeReader(QGroupBox):
         self.line_edit = QLineEdit()
         self.line_edit.setReadOnly(True)
         self.line_edit.setVisible(False)
+        self.line_edit.setStyleSheet("background-color: #E5EAF5; color: #000000; border: none;") # Серый фон, чёрный текст, без рамки
 
         self.button = QPushButton("Загрузить...")
+        self.button.setStyleSheet("background-color: #0D4CD3; color: #FFFFFF;") # Синий фон, белый текст
 
         layout.addWidget(self.line_edit)
         layout.addWidget(self.button, alignment=Qt.AlignmentFlag.AlignHCenter | Qt.AlignmentFlag.AlignBottom)
@@ -196,6 +202,7 @@ class VMGeneratorBlock(QGroupBox):
         size_policy = self.button.sizePolicy()
         size_policy.setHorizontalPolicy(size_policy.Policy.Expanding)
         self.button.setSizePolicy(size_policy)
+        self.button.setStyleSheet("background-color: #EE3F58; color: #FFFFFF;") # Красный фон, белый текст
 
         layout.addWidget(self.button, alignment=Qt.AlignmentFlag.AlignHCenter | Qt.AlignmentFlag.AlignBottom)
         layout.setAlignment(Qt.AlignmentFlag.AlignHCenter | Qt.AlignmentFlag.AlignBottom)
@@ -220,12 +227,15 @@ class VMTemplateViewer(QGroupBox):
 
         self.text_edit = QPlainTextEdit()
         self.text_edit.setReadOnly(True)
+        self.text_edit.setStyleSheet("background-color: #E5EAF5; color: #000000;") # Серый фон, чёрный текст
 
         self.button_layout = QHBoxLayout()
         self.copy_button = QPushButton("Копировать в буфер")
         self.save_button = QPushButton("Сохранить как файл...")
         self.copy_button.setVisible(False)
         self.save_button.setVisible(False)
+        self.copy_button.setStyleSheet("background-color: #0D4CD3; color: #FFFFFF;") # Синий фон, белый текст
+        self.save_button.setStyleSheet("background-color: #0D4CD3; color: #FFFFFF;") # Синий фон, белый текст
 
         self.button_layout.addWidget(self.copy_button)
         self.button_layout.addWidget(self.save_button)
@@ -254,6 +264,8 @@ class MainWindow(QMainWindow):
         super().__init__()
         self.setWindowTitle("Генератор VM-шаблонов")
         self.setGeometry(100, 100, 1200, 700)
+        # Устанавливаем стиль для всего окна
+        self.setStyleSheet("background-color: #FFFFFF;") # Белый фон
 
         central_widget = QWidget()
         self.setCentralWidget(central_widget)
@@ -264,6 +276,21 @@ class MainWindow(QMainWindow):
 
         self.left_widget = QGroupBox()
         self.left_widget.setTitle("Загрузка файлов")
+        self.left_widget.setStyleSheet("""
+            QGroupBox {
+                background-color: #FFFFFF;
+                color: #000000; /* Цвет заголовка */
+                border: 1px solid #000000; /* Цвет рамки */
+                border-radius: 5px;
+                margin-top: 1ex; /* Отступ сверху для текста заголовка */
+            }
+            QGroupBox::title {
+                subcontrol-origin: margin;
+                left: 10px;
+                padding: 0 5px 0 5px; /* Отступы вокруг текста заголовка */
+                color: #000000; /* Цвет текста заголовка */
+            }
+        """) # Белый фон, чёрный заголовок и рамка
         self.left_layout = QVBoxLayout(self.left_widget)
 
         self.json_schema_reader = JSONSchemeReader(self._on_file_state_changed)
@@ -295,6 +322,20 @@ class MainWindow(QMainWindow):
         splitter.addWidget(self.left_widget)
 
         self.vm_template_viewer = VMTemplateViewer()
+        self.vm_template_viewer.setStyleSheet("""
+            QGroupBox {
+                color: #000000; /* Цвет заголовка */
+                border: 1px solid #000000; /* Цвет рамки */
+                border-radius: 5px;
+                margin-top: 1ex; /* Отступ сверху для текста заголовка */
+            }
+            QGroupBox::title {
+                subcontrol-origin: margin;
+                left: 10px;
+                padding: 0 5px 0 5px; /* Отступы вокруг текста заголовка */
+                color: #000000; /* Цвет текста заголовка */
+            }
+        """) # Чёрный заголовок и рамка
         self.vm_template_viewer.connect_copy_signal(self.copy_template)
         self.vm_template_viewer.connect_save_signal(self.save_template)
         splitter.addWidget(self.vm_template_viewer)

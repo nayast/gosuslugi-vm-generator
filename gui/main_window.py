@@ -882,18 +882,14 @@ class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
 
-        # Загружаем Lato
+        # Загружаем все шрифты
         font_dir = "assets/fonts"
         if os.path.exists(font_dir):
             for font_file in os.listdir(font_dir):
                 if font_file.lower().endswith('.ttf'):
                     font_path = os.path.join(font_dir, font_file)
                     QFontDatabase.addApplicationFont(font_path)
-
-        # Загружаем Azo Sans
-        azo_sans_path = os.path.join(font_dir, "azo-sans-8.ttf")
-        if os.path.exists(azo_sans_path):
-             QFontDatabase.addApplicationFont(azo_sans_path)
+                    print(font_path)
 
         app_font = QFont("Lato", 10)
         self.setFont(app_font)

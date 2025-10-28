@@ -1,25 +1,22 @@
-
 import json
+from typing import Dict, List, Any, Union
 
-def parse_json_scheme(file_path):
-    with open(file_path, 'r', encoding='utf-8') as file:
-        data = json.load(file)
-    fields = _get_fields(data)
-    return fields
+def parse_json_scheme(schema):
+    def traverse(node, path=""):
+        ids = []
+        if isinstance(node, dict):
+            if 'id' in node:
+                ids.append(f"{path}.{node['id']}" if path else node['id'])
+            for key, value in node.items():
+                new_path = f"{path}.{key}" if path else key
+                ids.extend(traverse(value, new_path))
+        elif isinstance(node, list):
+            for item in node:
+                ids.extend(traverse(item, path))
+        return ids
 
-def _get_fields(_value):
-    fields = []
-    if isinstance(_value, dict):
-        if _value.get("id"):
-            return [_value["id"],]
-        for key, value in _value.items():
-            fields.extend(_get_fields(value))
+    if isinstance(schema, str):
+        with open(schema, 'r') as f:
+            schema = json.load(f)
 
-    elif isinstance(_value, list):
-        try:
-            for value in _value:
-                fields.extend(_get_fields(value))
-        except: pass
-    else:
-        return []
-    return fields
+    return traverse(schema)

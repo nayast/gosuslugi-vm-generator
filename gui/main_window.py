@@ -2,40 +2,52 @@ from PySide6.QtWidgets import (QMainWindow, QWidget, QVBoxLayout, QHBoxLayout,
                                QLabel, QLineEdit, QPushButton, QFileDialog, QPlainTextEdit,
                                QGroupBox, QListWidget, QAbstractItemView, QSplitter, QMessageBox, QMenuBar)
 from PySide6.QtCore import Qt
-from PySide6.QtGui import QFont
+from PySide6.QtGui import QFont, QPalette, QColor
 from PySide6.QtWidgets import QApplication
 import os
 import json
 import sys
+import core.mid_vm
 
-class JSONSchemeReader(QGroupBox):
+
+class JSONSchemeReader(QWidget):
     def __init__(self, on_state_change_callback):
         super().__init__()
-        self.setTitle("JSON-схема")
-        self.header_font = QFont()
-        self.header_font.setPointSize(12)
-        self.header_font.setBold(True)
-        self.setFont(self.header_font)
-
         self.on_state_change_callback = on_state_change_callback
+        self.setStyleSheet("""
+            QWidget {
+                background-color: #FFFFFF;
+                border-radius: 4px;
+                padding: 5px;
+            }
+        """)
 
         layout = QVBoxLayout(self)
+        layout.setContentsMargins(0, 0, 0, 0) # Убираем внутренние отступы
+
+        self.header_label = QLabel("JSON-схема")
+        header_font = QFont()
+        header_font.setPointSize(16) # Пример размера для H1
+        header_font.setBold(True)
+        self.header_label.setFont(header_font)
+        self.header_label.setStyleSheet("color: #808080; padding: 5px;") # Серый цвет
+        layout.addWidget(self.header_label)
+
         self.line_edit = QLineEdit()
         self.line_edit.setReadOnly(True)
         self.line_edit.setVisible(False)
         self.line_edit.setStyleSheet("background-color: #E5EAF5; color: #000000; border: none;")
-
-        layout.addWidget(self.line_edit)
-
-        layout.addStretch()
-
         self.button = QPushButton("Загрузить...")
         self.button.setStyleSheet("background-color: #0D4CD3; color: #FFFFFF;")
         size_policy = self.button.sizePolicy()
         size_policy.setHorizontalPolicy(size_policy.Policy.Expanding)
         self.button.setSizePolicy(size_policy)
 
+        layout.addWidget(self.line_edit)
         layout.addWidget(self.button)
+        layout.setAlignment(self.button, Qt.AlignBottom)
+
+        # layout.addLayout(content_layout)
 
         self.button.clicked.connect(self._on_button_clicked)
 
@@ -80,27 +92,39 @@ class JSONAppItem(QWidget):
         self.on_remove_callback(self.file_path)
 
 
-class JSONAppsReader(QGroupBox):
+class JSONAppsReader(QWidget):
     def __init__(self, on_state_change_callback):
         super().__init__()
-        self.setTitle("JSON-примеры")
-        self.header_font = QFont()
-        self.header_font.setPointSize(12)
-        self.header_font.setBold(True)
-        self.setFont(self.header_font)
-
         self.on_state_change_callback = on_state_change_callback
 
+        # Устанавливаем стили для белого фона, тени и скругления
+        self.setStyleSheet("""
+            QWidget {
+                background-color: white;
+                border-radius: 4px;
+                padding: 5px;
+            }
+        """)
+
         layout = QVBoxLayout(self)
+        layout.setContentsMargins(0, 0, 0, 0)
+
+        self.header_label = QLabel("JSON-примеры")
+        header_font = QFont()
+        header_font.setPointSize(16)
+        header_font.setBold(True)
+        self.header_label.setFont(header_font)
+        self.header_label.setStyleSheet("color: #808080; padding: 5px;")
+
+        layout.addWidget(self.header_label)
+
+        content_layout = QVBoxLayout()
+        content_layout.addStretch()
 
         self.items_layout = QVBoxLayout()
         self.items_widget = QWidget()
         self.items_widget.setLayout(self.items_layout)
         self.items_widget.setVisible(False)
-
-        layout.addWidget(self.items_widget)
-
-        layout.addStretch()
 
         self.add_button = QPushButton("Добавить файл...")
         self.add_button.setStyleSheet("background-color: transparent; border: 3px dashed #0D4CD3; color: #0D4CD3;")
@@ -108,7 +132,11 @@ class JSONAppsReader(QGroupBox):
         size_policy.setHorizontalPolicy(size_policy.Policy.Expanding)
         self.add_button.setSizePolicy(size_policy)
 
-        layout.addWidget(self.add_button)
+        content_layout.addWidget(self.items_widget)
+        content_layout.addWidget(self.add_button)
+        content_layout.setAlignment(self.add_button, Qt.AlignBottom)
+
+        layout.addLayout(content_layout)
 
         self.add_button.clicked.connect(self._on_add_clicked)
         self._file_paths = set()
@@ -161,27 +189,39 @@ class JSONAppsReader(QGroupBox):
         self.add_paths(paths)
 
 
-class XSDSchemeReader(QGroupBox):
+class XSDSchemeReader(QWidget):
     def __init__(self, on_state_change_callback):
         super().__init__()
-        self.setTitle("XSD-схема")
-        self.header_font = QFont()
-        self.header_font.setPointSize(12)
-        self.header_font.setBold(True)
-        self.setFont(self.header_font)
-
         self.on_state_change_callback = on_state_change_callback
 
+        # Устанавливаем стили для белого фона, тени и скругления
+        self.setStyleSheet("""
+            QWidget {
+                background-color: white;
+                border-radius: 4px;
+                padding: 5px;
+            }
+        """)
+
         layout = QVBoxLayout(self)
+        layout.setContentsMargins(0, 0, 0, 0)
+
+        self.header_label = QLabel("XSD-схема")
+        header_font = QFont()
+        header_font.setPointSize(16)
+        header_font.setBold(True)
+        self.header_label.setFont(header_font)
+        self.header_label.setStyleSheet("color: #808080; padding: 5px;")
+
+        layout.addWidget(self.header_label)
+
+        content_layout = QVBoxLayout()
+        content_layout.addStretch()
 
         self.line_edit = QLineEdit()
         self.line_edit.setReadOnly(True)
         self.line_edit.setVisible(False)
         self.line_edit.setStyleSheet("background-color: #E5EAF5; color: #000000; border: none;")
-
-        layout.addWidget(self.line_edit)
-
-        layout.addStretch()
 
         self.button = QPushButton("Загрузить...")
         self.button.setStyleSheet("background-color: #0D4CD3; color: #FFFFFF;")
@@ -189,7 +229,11 @@ class XSDSchemeReader(QGroupBox):
         size_policy.setHorizontalPolicy(size_policy.Policy.Expanding)
         self.button.setSizePolicy(size_policy)
 
-        layout.addWidget(self.button)
+        content_layout.addWidget(self.line_edit)
+        content_layout.addWidget(self.button)
+        content_layout.setAlignment(self.button, Qt.AlignBottom)
+
+        layout.addLayout(content_layout)
 
         self.button.clicked.connect(self._on_button_clicked)
 
@@ -212,16 +256,33 @@ class XSDSchemeReader(QGroupBox):
         self.line_edit.setVisible(bool(path))
 
 
-class VMGeneratorBlock(QGroupBox):
+class VMGeneratorBlock(QWidget):
     def __init__(self):
         super().__init__()
-        self.setTitle("VM-шаблон")
-        self.header_font = QFont()
-        self.header_font.setPointSize(12)
-        self.header_font.setBold(True)
-        self.setFont(self.header_font)
+
+        # Устанавливаем стили для белого фона, тени и скругления
+        self.setStyleSheet("""
+            QWidget {
+                background-color: white;
+                border-radius: 4px;
+                padding: 5px;
+            }
+        """)
 
         layout = QVBoxLayout(self)
+        layout.setContentsMargins(0, 0, 0, 0)
+
+        self.header_label = QLabel("VM-шаблон")
+        header_font = QFont()
+        header_font.setPointSize(16)
+        header_font.setBold(True)
+        self.header_label.setFont(header_font)
+        self.header_label.setStyleSheet("color: #808080; padding: 5px;")
+
+        layout.addWidget(self.header_label)
+
+        content_layout = QVBoxLayout()
+        content_layout.addStretch()
 
         self.button = QPushButton("Сгенерировать шаблон")
         size_policy = self.button.sizePolicy()
@@ -229,7 +290,10 @@ class VMGeneratorBlock(QGroupBox):
         self.button.setSizePolicy(size_policy)
         self.button.setStyleSheet("background-color: #EE3F58; color: #FFFFFF;")
 
-        layout.addWidget(self.button)
+        content_layout.addWidget(self.button)
+        content_layout.setAlignment(self.button, Qt.AlignBottom)
+
+        layout.addLayout(content_layout)
 
     def connect_generate_signal(self, slot):
         self.button.clicked.connect(slot)
@@ -242,16 +306,30 @@ class VMGeneratorBlock(QGroupBox):
             self.button.setStyleSheet("background-color: #66727F; color: #FFFFFF;")
 
 
-class VMTemplateViewer(QGroupBox):
+class VMTemplateViewer(QWidget):
     def __init__(self):
         super().__init__()
-        self.setTitle("Предпросмотр VM-шаблона")
-        self.header_font = QFont()
-        self.header_font.setPointSize(12)
-        self.header_font.setBold(True)
-        self.setFont(self.header_font)
+
+        # Устанавливаем стили для белого фона, тени и скругления
+        self.setStyleSheet("""
+            QWidget {
+                background-color: white;
+                border-radius: 4px;
+                padding: 5px;
+            }
+        """)
 
         layout = QVBoxLayout(self)
+        layout.setContentsMargins(0, 0, 0, 0)
+
+        self.header_label = QLabel("Предпросмотр VM-шаблона")
+        header_font = QFont()
+        # header_font.setPointSize(16) # Не H1
+        # header_font.setBold(True)
+        self.header_label.setFont(header_font)
+        self.header_label.setStyleSheet("color: #808080; padding: 5px;") # Серый цвет
+
+        layout.addWidget(self.header_label)
 
         self.text_edit = QPlainTextEdit()
         self.text_edit.setReadOnly(True)
@@ -339,7 +417,7 @@ class RecentFilesManager:
         self.recent_files.insert(0, file_path)
         self.recent_files = self.recent_files[:self.max_recent]
         self._save_recent_files()
-        self.main_window._update_recent_menu() # Обновляем меню после изменения списка
+        self.main_window._update_recent_menu()
 
     def get_recent_files(self):
         return self.recent_files
@@ -497,7 +575,12 @@ class MainWindow(QMainWindow):
         qr.moveCenter(cp)
         self.move(qr.topLeft())
 
-        self.setStyleSheet("background-color: #FFFFFF;")
+        # Устанавливаем серый фон для всего окна
+        self.setStyleSheet("""
+            QMainWindow {
+                background-color: #E0E0E0;
+            }
+        """)
 
         menu_bar = QMenuBar(self)
         menu_bar.setStyleSheet("""
@@ -551,71 +634,63 @@ class MainWindow(QMainWindow):
         central_layout = QHBoxLayout(central_widget)
         central_layout.addWidget(splitter)
 
-        self.left_widget = QGroupBox()
-        self.left_widget.setTitle("Загрузка файлов")
-        self.left_widget.setStyleSheet("""
-            QGroupBox {
-                background-color: #FFFFFF;
-                color: #000000;
-                border: 1px solid #000000;
-                border-radius: 5px;
-                margin-top: 1ex;
-            }
-            QGroupBox::title {
-                subcontrol-origin: margin;
-                left: 10px;
-                padding: 0 5px 0 5px;
-                color: #000000;
-            }
-        """)
+        # Левый виджет (теперь просто QWidget без фона)
+        self.left_widget = QWidget()
+        # Убираем стили фона сюда
+        self.left_widget.setStyleSheet("")
+        # Устанавливаем политику размера для минимального размера
+        size_policy = self.left_widget.sizePolicy()
+        size_policy.setVerticalPolicy(size_policy.Policy.Minimum)
+        self.left_widget.setSizePolicy(size_policy)
+
         self.left_layout = QVBoxLayout(self.left_widget)
+        self.left_layout.setAlignment(Qt.AlignTop) # Выравнивание по верху
+        self.left_layout.setSpacing(5) # Добавляем небольшой спейсинг
 
         self.json_schema_reader = JSONSchemeReader(self._on_file_state_changed)
         self.json_apps_reader = JSONAppsReader(self._on_file_state_changed)
         self.xsd_scheme_reader = XSDSchemeReader(self._on_file_state_changed)
         self.vm_generator_block = VMGeneratorBlock()
 
-        json_schema_size_policy = self.json_schema_reader.sizePolicy()
-        json_schema_size_policy.setVerticalPolicy(json_schema_size_policy.Policy.Minimum)
-        self.json_schema_reader.setSizePolicy(json_schema_size_policy)
-
-        json_apps_size_policy = self.json_apps_reader.sizePolicy()
-        json_apps_size_policy.setVerticalPolicy(json_apps_size_policy.Policy.Minimum)
-        self.json_apps_reader.setSizePolicy(json_apps_size_policy)
-
-        xsd_scheme_size_policy = self.xsd_scheme_reader.sizePolicy()
-        xsd_scheme_size_policy.setVerticalPolicy(xsd_scheme_size_policy.Policy.Minimum)
-        self.xsd_scheme_reader.setSizePolicy(xsd_scheme_size_policy)
-
-        vm_gen_size_policy = self.vm_generator_block.sizePolicy()
-        vm_gen_size_policy.setVerticalPolicy(vm_gen_size_policy.Policy.Minimum)
-        self.vm_generator_block.setSizePolicy(vm_gen_size_policy)
+        # Устанавливаем политику размера для минимального размера
+        for widget in [self.json_schema_reader, self.json_apps_reader, self.xsd_scheme_reader, self.vm_generator_block]:
+            size_policy = widget.sizePolicy()
+            size_policy.setVerticalPolicy(size_policy.Policy.Minimum)
+            widget.setSizePolicy(size_policy)
 
         self.left_layout.addWidget(self.json_schema_reader)
         self.left_layout.addWidget(self.json_apps_reader)
         self.left_layout.addWidget(self.xsd_scheme_reader)
         self.left_layout.addWidget(self.vm_generator_block)
 
+        # Добавляем растягивающийся элемент после последнего виджета
+        self.left_layout.addStretch()
+
         splitter.addWidget(self.left_widget)
 
+        # Правый виджет (предпросмотр) без фона
+        self.vm_template_viewer_widget = QWidget()
+        # Убираем стили фона сюда
+        self.vm_template_viewer_widget.setStyleSheet("")
+        # Устанавливаем политику размера для минимального размера
+        size_policy = self.vm_template_viewer_widget.sizePolicy()
+        size_policy.setVerticalPolicy(size_policy.Policy.Minimum)
+        self.vm_template_viewer_widget.setSizePolicy(size_policy)
+
+        vm_template_viewer_layout = QVBoxLayout(self.vm_template_viewer_widget)
+        vm_template_viewer_layout.setAlignment(Qt.AlignTop) # Выравнивание по верху
+        vm_template_viewer_layout.setSpacing(5) # Добавляем небольшой спейсинг
         self.vm_template_viewer = VMTemplateViewer()
-        self.vm_template_viewer.setStyleSheet("""
-            QGroupBox {
-                color: #000000;
-                border: 1px solid #000000;
-                border-radius: 5px;
-                margin-top: 1ex;
-            }
-            QGroupBox::title {
-                subcontrol-origin: margin;
-                left: 10px;
-                padding: 0 5px 0 5px;
-                color: #000000;
-            }
-        """)
-        self.vm_template_viewer.connect_copy_signal(self.copy_template)
-        self.vm_template_viewer.connect_save_signal(self.save_template)
-        splitter.addWidget(self.vm_template_viewer)
+        # Устанавливаем политику размера для минимального размера
+        size_policy = self.vm_template_viewer.sizePolicy()
+        size_policy.setVerticalPolicy(size_policy.Policy.Minimum)
+        self.vm_template_viewer.setSizePolicy(size_policy)
+        vm_template_viewer_layout.addWidget(self.vm_template_viewer)
+
+        # Добавляем растягивающийся элемент после последнего виджета в правом блоке
+        vm_template_viewer_layout.addStretch()
+
+        splitter.addWidget(self.vm_template_viewer_widget)
 
         splitter.setSizes([splitter.width() // 2, splitter.width() // 2])
 
@@ -702,15 +777,11 @@ class MainWindow(QMainWindow):
             self._on_file_state_changed()
             return
 
-        #todo: поменять на логику по генерации шаблона.
         try:
-            with open('gui/example.xml', 'r', encoding='utf-8') as f:
-                template_content = f.read()
+            template_content = core.mid_vm.generate_template(schema_path, xsd_path)
             self.vm_template_viewer.set_content(template_content)
-        except FileNotFoundError:
-            self.vm_template_viewer.set_content("Ошибка: файл 'gui/example.xml' не найден.")
         except Exception as e:
-            self.vm_template_viewer.set_content(f"Ошибка при чтении шаблона: {e}")
+            self.vm_template_viewer.set_content(f"Ошибка при генерации шаблона: {e}")
 
     def copy_template(self):
         clipboard = QApplication.clipboard()

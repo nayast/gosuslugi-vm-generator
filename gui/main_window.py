@@ -1,8 +1,9 @@
 from PySide6.QtWidgets import (QMainWindow, QWidget, QVBoxLayout, QHBoxLayout,
                                QLabel, QLineEdit, QPushButton, QFileDialog, QPlainTextEdit,
-                               QGroupBox, QListWidget, QAbstractItemView, QSplitter, QMessageBox, QMenuBar)
+                               QGroupBox, QListWidget, QAbstractItemView, QSplitter, QMessageBox, QMenuBar,
+                               QDialog, QStackedWidget, QFrame) # Убран QGraphicsDropShadowEffect
 from PySide6.QtCore import Qt
-from PySide6.QtGui import QFont, QPalette, QColor, QSyntaxHighlighter, QTextCharFormat, QBrush, QFontDatabase
+from PySide6.QtGui import QFont, QPalette, QColor, QSyntaxHighlighter, QTextCharFormat, QBrush, QFontDatabase, QPixmap # Добавлен QPixmap
 from PySide6.QtWidgets import QApplication
 import os
 import json
@@ -154,8 +155,6 @@ class JSONAppsReader(QWidget):
                 font-family: 'Lato';
                 font-weight: bold;
                 font-size: 12pt;
-                width: 20px;
-                height: 20px;
             }
         """)
         self.toggle_button.setFixedSize(20, 20)
@@ -213,10 +212,10 @@ class JSONAppsReader(QWidget):
 
         has_files = bool(self._file_paths)
         self.items_widget.setVisible(has_files and self.toggle_button.isChecked())
-        self.toggle_button.setVisible(has_files) # Показываем кнопку, если есть файлы
+        self.toggle_button.setVisible(has_files)
         self.toggle_button.setEnabled(has_files)
         if not has_files:
-            self.toggle_button.setChecked(False) # Сбрасываем состояние
+            self.toggle_button.setChecked(False)
         self.on_state_change_callback()
 
     def _on_add_clicked(self):
@@ -240,7 +239,7 @@ class JSONAppsReader(QWidget):
         if not has_files:
             self.toggle_button.setChecked(False)
             self.items_widget.setVisible(False)
-            self.toggle_button.setVisible(False) # Скрываем кнопку
+            self.toggle_button.setVisible(False)
             self.toggle_button.setEnabled(False)
         else:
             self.items_widget.setVisible(self.toggle_button.isChecked())
@@ -254,7 +253,7 @@ class JSONAppsReader(QWidget):
         self._file_paths.clear()
         self.toggle_button.setChecked(False)
         self.items_widget.setVisible(False)
-        self.toggle_button.setVisible(False) # Скрываем кнопку
+        self.toggle_button.setVisible(False)
         self.toggle_button.setEnabled(False)
         self.on_state_change_callback()
 
@@ -487,25 +486,18 @@ class VMTemplateViewer(QWidget):
 
         self.text_edit = QPlainTextEdit()
         self.text_edit.setReadOnly(True)
+        # Стили для скроллбара: скрыт, но прокрутка работает
         self.text_edit.setStyleSheet("""
             background-color: #E5EAF5; 
             color: #000000; 
             border: none; 
-            font-family: 'Lato';
-            /* Стили для скроллбара */
+            font-family: 'Azo Sans'
             QScrollBar:vertical {
-                border: none;
-                background-color: #E0E0E0;
-                width: 10px;
-                border-radius: 5px;
+                color: transparent;
+                width: 0px;
             }
             QScrollBar::handle:vertical {
-                background-color: #A0A0A0;
-                border-radius: 5px;
-                min-height: 20px;
-            }
-            QScrollBar::handle:vertical:hover {
-                background-color: #808080;
+                background: none;
             }
             QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical {
                 height: 0px;
@@ -783,16 +775,125 @@ class ProjectManager:
             self.main_window.json_apps_reader.set_paths(existing_example_paths)
 
 
+class TutorialDialog(QDialog):
+    def __init__(self):
+        super().__init__()
+        self.setWindowTitle("Обучение")
+        self.setFixedSize(700, 440) # Фиксированный размер окна
+        self.setModal(True) # Окно модальное
+        # Устанавливаем фон окна
+        self.setStyleSheet("background-color: #F5F7FA;")
+
+        main_layout = QVBoxLayout(self)
+        main_layout.setContentsMargins(0, 0, 0, 0) # Убираем отступы
+        main_layout.setSpacing(0) # Убираем промежутки
+
+        # Стек виджетов для слайдов
+        self.stacked_widget = QStackedWidget()
+        # Загружаем изображения слайдов
+        tutorial_dir = "assets/tutorial"
+        self.slide_images = []
+        for i in range(1, 6): # Предполагаем 5 слайдов
+            img_path = os.path.join(tutorial_dir, f"step{i}.png")
+            if os.path.exists(img_path):
+                label = QLabel()
+                label.setPixmap(QPixmap(img_path)) # Используем QPixmap
+                label.setAlignment(Qt.AlignCenter)
+                self.slide_images.append(label)
+                self.stacked_widget.addWidget(label)
+            else:
+                # Если изображение не найдено, добавляем пустой QLabel
+                empty_label = QLabel(f"Слайд {i} не найден: {img_path}")
+                empty_label.setAlignment(Qt.AlignCenter)
+                # Устанавливаем шрифт для пустого слайда
+                empty_label.setFont(QFont("Lato", 10))
+                self.slide_images.append(empty_label)
+                self.stacked_widget.addWidget(empty_label)
+
+        main_layout.addWidget(self.stacked_widget)
+
+        # Панель управления (40px)
+        control_frame = QFrame()
+        control_frame.setFixedHeight(40)
+        # Устанавливаем фон панели
+        control_frame.setStyleSheet("background-color: #0B1F33;")
+        control_layout = QHBoxLayout(control_frame)
+        # Убираем отступы внутри панели, чтобы элементы были ближе к краю
+        control_layout.setContentsMargins(0, 0, 10, 0) # Отступы: слева 0, сверху 0, справа 10, снизу 0
+        control_layout.setSpacing(10) # Отступ между элементами
+
+        self.prev_button = QPushButton("Назад")
+        # Устанавливаем шрифт для кнопки
+        self.prev_button.setFont(QFont("Lato", 10))
+        self.prev_button.clicked.connect(self._prev_slide)
+        self.prev_button.setVisible(False) # Скрываем на первом слайде
+
+        self.counter_label = QLabel(f"1 из {len(self.slide_images)}")
+        # Устанавливаем шрифт и цвет для счётчика
+        self.counter_label.setFont(QFont("Lato", 10))
+        self.counter_label.setStyleSheet("color: white;")
+
+        self.next_button = QPushButton("Далее")
+        # Устанавливаем шрифт для кнопки
+        self.next_button.setFont(QFont("Lato", 10))
+        self.next_button.clicked.connect(self._next_slide)
+
+        # Добавляем растягивающийся элемент перед счётчиком и кнопками, чтобы они были справа
+        control_layout.addStretch()
+        control_layout.addWidget(self.prev_button)
+        control_layout.addWidget(self.counter_label)
+        control_layout.addWidget(self.next_button)
+
+        main_layout.addWidget(control_frame)
+
+        self.current_slide_index = 0
+        self._update_navigation()
+
+    def _update_navigation(self):
+        total_slides = len(self.slide_images)
+        # Обновляем счётчик
+        self.counter_label.setText(f"{self.current_slide_index + 1} из {total_slides}")
+
+        # Обновляем видимость кнопок
+        self.prev_button.setVisible(self.current_slide_index > 0)
+        if self.current_slide_index == total_slides - 1:
+            self.next_button.setText("Закрыть")
+        else:
+            self.next_button.setText("Далее")
+
+        # Переключаем слайд
+        self.stacked_widget.setCurrentIndex(self.current_slide_index)
+
+    def _prev_slide(self):
+        if self.current_slide_index > 0:
+            self.current_slide_index -= 1
+            self._update_navigation()
+
+    def _next_slide(self):
+        if self.current_slide_index == len(self.slide_images) - 1:
+            # Если это последний слайд, закрываем окно
+            self.accept()
+        else:
+            self.current_slide_index += 1
+            self._update_navigation()
+
+
 class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
 
+        # Загружаем Lato
         font_dir = "assets/fonts"
         if os.path.exists(font_dir):
             for font_file in os.listdir(font_dir):
                 if font_file.lower().endswith('.ttf'):
                     font_path = os.path.join(font_dir, font_file)
                     QFontDatabase.addApplicationFont(font_path)
+
+        # Загружаем Azo Sans
+        azo_sans_path = os.path.join(font_dir, "azo-sans-8.ttf")
+        if os.path.exists(azo_sans_path):
+             QFontDatabase.addApplicationFont(azo_sans_path)
 
         app_font = QFont("Lato", 10)
         self.setFont(app_font)
@@ -901,14 +1002,14 @@ class MainWindow(QMainWindow):
             size_policy.setVerticalPolicy(size_policy.Policy.Preferred)
             widget.setSizePolicy(size_policy)
 
-        # --- Обёртки с тенями ---
+        # --- Обёртки с рамками ---
         self.json_schema_wrapper = QWidget()
         self.json_schema_wrapper.setStyleSheet("""
             QWidget {
                 background-color: #FFFFFF;
                 border-radius: 4px;
                 padding: 5px;
-                box-shadow: 0px 4px 4px 0px #000000;
+                border: 1px solid #000000; /* Чёрная рамка */
             }
         """)
         self.json_schema_layout = QVBoxLayout(self.json_schema_wrapper)
@@ -920,7 +1021,7 @@ class MainWindow(QMainWindow):
                 background-color: #FFFFFF;
                 border-radius: 4px;
                 padding: 5px;
-                box-shadow: 0px 4px 4px 0px #000000; /* Тень */
+                border: 1px solid #000000; /* Чёрная рамка */
             }
         """)
         self.json_apps_layout = QVBoxLayout(self.json_apps_wrapper)
@@ -932,7 +1033,7 @@ class MainWindow(QMainWindow):
                 background-color: #FFFFFF;
                 border-radius: 4px;
                 padding: 5px;
-                box-shadow: 0px 4px 4px 0px #000000; /* Тень */
+                border: 1px solid #000000; /* Чёрная рамка */
             }
         """)
         self.xsd_scheme_layout = QVBoxLayout(self.xsd_scheme_wrapper)
@@ -944,7 +1045,7 @@ class MainWindow(QMainWindow):
                 background-color: #FFFFFF;
                 border-radius: 4px;
                 padding: 5px;
-                box-shadow: 0px 4px 4px 0px #000000; /* Тень */
+                border: 1px solid #000000; /* Чёрная рамка */
             }
         """)
         self.vm_generator_layout = QVBoxLayout(self.vm_generator_wrapper)
@@ -976,7 +1077,7 @@ class MainWindow(QMainWindow):
                 background-color: #FFFFFF;
                 border-radius: 4px;
                 padding: 5px;
-                box-shadow: 0px 4px 4px 0px #000000; /* Тень */
+                border: 1px solid #000000; /* Чёрная рамка */
             }
         """)
         self.vm_template_layout = QVBoxLayout(self.vm_template_wrapper)
@@ -1054,7 +1155,6 @@ class MainWindow(QMainWindow):
 
     def _on_file_state_changed(self):
         schema_loaded = bool(self.json_schema_reader.get_path())
-        # examples_loaded больше не участвует в проверке
         xsd_loaded = bool(self.xsd_scheme_reader.get_path())
 
         all_loaded = schema_loaded and xsd_loaded # examples_loaded убрано
@@ -1129,13 +1229,7 @@ class MainWindow(QMainWindow):
                 print(f"Ошибка при сохранении шаблона: {e}")
 
     def show_instruction(self):
-        instruction_text = """
-        Инструкция по использованию:
-        1. Загрузите JSON-схему формы.
-        2. Загрузите XSD-схему ведомства.
-        3. Нажмите "Сгенерировать шаблон".
-        """
-        msg_box = QMessageBox()
-        msg_box.setWindowTitle("Инструкция")
-        msg_box.setText(instruction_text)
-        msg_box.exec()
+        # Открываем новое окно туториала
+        tutorial = TutorialDialog()
+        tutorial.exec()
+

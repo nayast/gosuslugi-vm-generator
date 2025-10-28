@@ -1,7 +1,7 @@
-from json_scheme_parser import parse_json_scheme
-from xsd_parser import parse_xsd
-from matcher import match_fields
-from generator import create_vm_file
+from core.json_scheme_parser import parse_json_scheme
+from core.xsd_parser import parse_xsd
+from core.matcher import match_fields
+from core.generator import create_vm_file
 
 def generate_temp(xsd_path, json_path):
     res1 = parse_xsd(xsd_path)

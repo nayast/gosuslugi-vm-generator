@@ -1,169 +1,115 @@
-import json
-import yaml
-from lxml import etree
-import logging
-from typing import Any, Dict, List, Optional
-from pathlib import Path
+from collections import defaultdict
+import os
 
 
-class JsonToXmlTransformer:
-    def __init__(self, mapping_file: str):
-        self.mappings = self.load_mappings(mapping_file)
-        self.logger = logging.getLogger(__name__)
+def build_tree(xsd_fields):
+    tree = {}
 
-    def load_mappings(self, mapping_file: str) -> Dict:
-        """Загрузка словаря сопоставлений из YAML"""
-        with open(mapping_file, 'r', encoding='utf-8') as f:
-            return yaml.safe_load(f)
+    for f in xsd_fields:
+        parts = f["path"].split(".")
+        node = tree
 
-    def get_value_from_json_path(self, data: Dict, json_path: str) -> Any:
-        """Извлечение значения по JSON-path"""
-        try:
-            parts = json_path.split('.')
-            current = data
-            for part in parts:
-                if part in current:
-                    current = current[part]
-                else:
-                    return None
-            return current
-        except (KeyError, TypeError):
-            return None
+        for p in parts:
+            if p not in node:
+                node[p] = {}
+            node = node[p]
 
-    def generate_vm_template(self, json_schema: Dict, xsd_schema: str, test_files: List[Dict]) -> str:
-        """Генерация VM-шаблона"""
+        # листовой элемент содержит данные поля
+        node["_field"] = f
 
-        vm_lines = [
-            "<?xml version=\"1.0\" encoding=\"UTF-8\"?>",
-            "<soc:AppDataRequest xmlns:soc=\"http://socit.ru/kalin/orders/2.0.0\">"
-        ]
+    return tree
 
-        # Анализ XSD для понимания структуры
-        xsd_root = etree.fromstring(xsd_schema.encode('utf-8'))
+def render_tree(node, indent=0):
+    xml = []
+    pad = "  " * indent
 
-        # Генерация маппингов на основе анализа данных
-        vm_lines.extend(self.generate_mappings_section())
+    for key, child in node.items():
+        if key == "_field":
+            continue
 
-        # Основная логика преобразования
-        vm_lines.extend(self.generate_main_template())
+        field_info = child.get("_field")
+        open_tag = f"{pad}<{key}>"
+        close_tag = f"{pad}</{key}>"
 
-        vm_lines.append("</soc:AppDataRequest>")
+        if field_info:  # лист
+            var = key
+            json = field_info["json_path"]
 
-        return "\n".join(vm_lines)
+            value = (
+                f"$!{{{var}}}" if json
+                else "$!{NotFound}"
+            )
 
-    def generate_mappings_section(self) -> List[str]:
-        """Генерация секции маппингов переменных"""
-        lines = []
+            xml.append(f"{open_tag}{value}{close_tag}")
 
-        # Базовые маппинги
-        base_mappings = [
-            ("userLastName", "PersonalInfo.storedValues.lastName"),
-            ("userFirstName", "PersonalInfo.storedValues.firstName"),
-            ("userBirthDate", "PersonalInfo.storedValues.birthDate"),
-        ]
+        else:  # вложенный узел
+            xml.append(open_tag)
+            xml.extend(render_tree(child, indent + 1))
+            xml.append(close_tag)
 
-        for var_name, json_path in base_mappings:
-            lines.append(f"#set(${var_name} = $jsonPathTool.get('{json_path}'))")
-
-        return lines
-
-    def generate_main_template(self) -> List[str]:
-        """Генерация основной логики шаблона"""
-        lines = [
-            "  <soc:SetRequest>",
-            "    <soc:orderId>$orderId</soc:orderId>",
-            "    <soc:ServiceCode>$serviceCode</soc:ServiceCode>",
-            "",
-            "    <!-- Данные заявителя -->",
-            "    <soc:userData>",
-            "      <soc:lastName>$!{userLastName}</soc:lastName>",
-            "      <soc:firstName>$!{userFirstName}</soc:firstName>",
-            "      #if($userMiddleName && $userMiddleName != \"\")",
-            "      <soc:middleName>$!{userMiddleName}</soc:middleName>",
-            "      #end",
-            "      <soc:birthDate>$!{userBirthDate}</soc:birthDate>",
-            "    </soc:userData>",
-            "",
-            "    <!-- Условные блоки -->",
-            self.generate_conditional_blocks(),
-            "",
-            "    <!-- Циклические блоки (дети) -->",
-            self.generate_loop_blocks(),
-            "  </soc:SetRequest>"
-        ]
-
-        return lines
-
-    def generate_conditional_blocks(self) -> str:
-        """Генерация условных блоков"""
-        return """#if($ApplicantChoice == \"v1\")
-    <!-- Блок для заявителя -->
-    <soc:DelegateInfo>1</soc:DelegateInfo>
-#else
-    <!-- Блок для представителя -->
-    <soc:DelegateInfo>2</soc:DelegateInfo>
-    <!-- Данные представителя -->
-#end"""
-
-    def generate_loop_blocks(self) -> str:
-        """Генерация циклических блоков"""
-        return """#if($c2 && !$c2.isEmpty())
-    <soc:children>
-    #foreach($child in $c2)
-        <soc:child>
-            <soc:childData>
-                <soc:lastName>$!{child.c6}</soc:lastName>
-                <soc:firstName>$!{child.c7}</soc:firstName>
-                #if($child.c12 && $child.c12 != \"\")
-                <soc:middleName>$!{child.c12}</soc:middleName>
-                #end
-            </soc:childData>
-        </soc:child>
-    #end
-    </soc:children>
-#end"""
+    return xml
 
 
-class JsonPathTool:
-    """Утилита для работы с JSON-path"""
 
-    @staticmethod
-    def get(data: Dict, path: str, default: Any = 0) -> Any:
-        """Получение значения по пути с fallback"""
-        try:
-            parts = path.split('.')
-            current = data
-            for part in parts:
-                if isinstance(current, dict) and part in current:
-                    current = current[part]
-                elif isinstance(current, list) and part.isdigit():
-                    current = current[int(part)]
-                else:
-                    return default
-            return current if current is not None else default
-        except (KeyError, IndexError, TypeError, ValueError):
-            logging.warning(f"Path not found: {path}")
-            return default
+def build_xml(node, indent=0):
+    lines = []
+    pad = " " * indent
 
+    for tag, meta in node.items():
+        is_leaf = meta["_leaf"]
+        is_list = meta["_list"]
+        iterator = meta["_iterator"]
+        children = meta["_children"]
 
-def main():
-    # Загрузка файлов
-    with open('xsd_schema.txt', 'r', encoding='utf-8') as f:
-        xsd_content = f.read()
+        # #### LIST ####
+        if is_list:
+            iter_var = iterator or tag[0].lower() + tag[1:]
+            lines.append(f"{pad}#foreach(${iter_var} in ${iter_var}s)")
+            lines.append(f"{pad}  <{tag}>")
+            lines.append(build_xml(children, indent + 4))
+            lines.append(f"{pad}  </{tag}>")
+            lines.append(f"{pad}#end")
+            continue
 
-    with open('sample_file1.txt', 'r', encoding='utf-8') as f:
-        json_sample = json.load(f)
+        # #### CONTAINER ####
+        if not is_leaf:
+            lines.append(f"{pad}<{tag}>")
+            lines.append(build_xml(children, indent + 2))
+            lines.append(f"{pad}</{tag}>")
+            continue
 
-    # Инициализация трансформера
-    transformer = JsonToXmlTransformer('mappings.yaml')
+        # #### LEAF FIELD ####
+        lines.append(f"{pad}<{tag}>$!{{NotFound}}</{tag}>")
 
-    # Генерация шаблона
-    vm_template = transformer.generate_vm_template({}, xsd_content, [json_sample])
-
-    # Сохранение результата
-    with open('template.vm', 'w', encoding='utf-8') as f:
-        f.write(vm_template)
+    return "\n".join(lines)
 
 
-if __name__ == "__main__":
-    main()
+
+
+def generate_vm(xsd_fields):
+    set_lines = []
+
+    for f in xsd_fields:
+        json = f["json_path"]
+        if json:
+            var = f["path"].split(".")[-1]
+            json_expr = "$context['" + "']['".join(json.split(".")) + "']"
+            set_lines.append(f"#set(${var} = {json_expr})")
+
+    tree = build_tree(xsd_fields)
+    xml_lines = render_tree(tree)
+
+    return "\n".join(set_lines) + "\n\n" + "\n".join(xml_lines)
+
+
+def save_vm_to_file(vm_text, filepath):
+    with open(filepath, "w", encoding="utf-8") as f:
+        f.write(vm_text)
+    return filepath
+
+def create_vm_file(xsd_fields):
+    vm_text = generate_vm(xsd_fields)
+    return vm_text
+    save_vm_to_file(vm_text, output_path)
+    print(f"VM шаблон сохранён в файл: {output_path}")
+    return output_path

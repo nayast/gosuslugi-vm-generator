@@ -1,0 +1,22 @@
+{
+  "fields": [
+    {
+      "id": "lastName",
+      "label": "Фамилия"
+    },
+    {
+      "id": "firstName", 
+      "label": "Имя"
+    },
+    {
+      "id": "contact",
+      "label": "Контактные данные",
+      "fields": [
+        {
+          "id": "email",
+          "label": "Email"
+        }
+      ]
+    }
+  ]
+}

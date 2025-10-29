@@ -532,20 +532,6 @@ def generate_velocity_template_from_xsd(xsd_path):
     template_str += f"</{full_root_name}>\n"
     return template_str
 
-def main():
-    xsd_file_path = r"C:/Users/1/Desktop/MPITGOSUSLUGI/assets/схема вида сведений.xsd"
+def generate(xsd_file_path):
     template_str = generate_velocity_template_from_xsd(xsd_file_path)
-
-    if template_str is not None:
-        print(template_str)
-        # Опционально: сохранить в файл
-        # output_file = "generated_velocity_template.vm"
-        # with open(output_file, 'w', encoding='utf-8') as f:
-        #     f.write(template_str)
-        # print(f"Шаблон сохранён в {output_file}")
-    else:
-        print("Не удалось сгенерировать шаблон Velocity.")
-
-
-if __name__ == "__main__":
-    main()
+    return template_str

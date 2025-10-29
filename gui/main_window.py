@@ -398,24 +398,31 @@ class VMSyntaxHighlighter(QSyntaxHighlighter):
     def __init__(self, parent=None):
         super().__init__(parent)
 
+        # Формат по умолчанию - чёрный текст
+        self.default_format = QTextCharFormat()
+        self.default_format.setForeground(QColor("#000000"))
+
+        # Форматы для подсветки
         self.comment_format = QTextCharFormat()
-        self.comment_format.setForeground(QColor("#888888"))
+        self.comment_format.setForeground(QColor("#888888"))  # Светло-серый для комментариев
 
         self.directive_format = QTextCharFormat()
-        self.directive_format.setForeground(QColor("#00AA00"))
+        self.directive_format.setForeground(QColor("#00AA00"))  # Зелёный для директив
 
         self.variable_format = QTextCharFormat()
-        self.variable_format.setForeground(QColor("#800080"))
+        self.variable_format.setForeground(QColor("#800080"))  # Фиолетовый для переменных
 
         self.tag_format = QTextCharFormat()
-        self.tag_format.setForeground(QColor("#0000FF"))
+        self.tag_format.setForeground(QColor("#0000FF"))  # Синий для XML-тегов
 
         self.attribute_format = QTextCharFormat()
-        self.attribute_format.setForeground(QColor("#FFA500"))
+        self.attribute_format.setForeground(QColor("#FFA500"))  # Оранжевый для атрибутов
 
     def highlightBlock(self, text):
-        self.setFormat(0, len(text), QTextCharFormat())
+        # Сначала применяем формат по умолчанию ко всему блоку
+        self.setFormat(0, len(text), self.default_format)
 
+        # 1. Подсветка комментариев #* ... *#
         comment_start = 0
         while comment_start < len(text):
             comment_start = text.find('#*', comment_start)
@@ -429,9 +436,12 @@ class VMSyntaxHighlighter(QSyntaxHighlighter):
             self.setFormat(comment_start, comment_end - comment_start, self.comment_format)
             comment_start = comment_end
 
+        # 2. Подсветка директив #...
+        # Находим все директивы, но не в комментариях
         directive_pattern = re.compile(r'(#\w+)')
         for match in directive_pattern.finditer(text):
             start, end = match.span()
+            # Проверяем, не находится ли директива внутри комментария
             is_in_comment = False
             for comment_start in re.finditer(r'#\*', text):
                 comment_end_match = re.search(r'\*#', text[comment_start.start():])
@@ -443,19 +453,25 @@ class VMSyntaxHighlighter(QSyntaxHighlighter):
             if not is_in_comment:
                 self.setFormat(start, end - start, self.directive_format)
 
+        # 3. Подсветка переменных $...
+        # Ищем $!{...}, $ {...}, $letter, $number, $special_char
         variable_pattern = re.compile(r'\$!?\{[^}]*\}|\$[a-zA-Z_][a-zA-Z0-9_-]*|\$[a-zA-Z0-9_-]+')
         for match in variable_pattern.finditer(text):
             start, end = match.span()
             self.setFormat(start, end - start, self.variable_format)
 
+        # 4. Подсветка XML-тегов
+        # Ищем <tag>, </tag>, <tag/>, <tag attr="value">
         tag_pattern = re.compile(r'<[^>]*>')
         for match in tag_pattern.finditer(text):
             start, end = match.span()
             tag_text = text[start:end]
 
+            # Подсветка атрибутов внутри тега
             attr_pattern = re.compile(r'(\w+)=("[^"]*")')
             for attr_match in attr_pattern.finditer(tag_text):
                 attr_start, attr_end = attr_match.span()
+                # Сдвигаем позиции относительно начала строки
                 self.setFormat(start + attr_start, attr_end - attr_start, self.attribute_format)
 
             self.setFormat(start, end - start, self.tag_format)
@@ -486,14 +502,21 @@ class VMTemplateViewer(QWidget):
 
         self.text_edit = QPlainTextEdit()
         self.text_edit.setReadOnly(True)
-        # Стили для скроллбара: скрыт, но прокрутка работает
+        # Устанавливаем цвет фона и убираем рамку
         self.text_edit.setStyleSheet("""
-            background-color: #E5EAF5; 
-            color: #000000; 
-            border: none; 
-            font-family: 'Azo Sans'
+            background-color: #EDF2FE;
+            border: none;
+            color: #000000;
+        """)
+        # Устанавливаем шрифт Azo Sans напрямую
+        azo_sans_font = QFont("Azo Sans")
+        self.text_edit.setFont(azo_sans_font)
+
+        # Стили для скроллбара: скрыт, но прокрутка работает
+        self.text_edit.setVerticalScrollBarPolicy(Qt.ScrollBarAlwaysOff) # Отключаем отображение скроллбара
+        # Чтобы скролл всё ещё работал с колесиком мыши, но не отображался:
+        self.text_edit.setStyleSheet(self.text_edit.styleSheet() + """
             QScrollBar:vertical {
-                color: transparent;
                 width: 0px;
             }
             QScrollBar::handle:vertical {
@@ -882,14 +905,18 @@ class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
 
-        # Загружаем все шрифты
+        # Загружаем Lato
         font_dir = "assets/fonts"
         if os.path.exists(font_dir):
             for font_file in os.listdir(font_dir):
                 if font_file.lower().endswith('.ttf'):
                     font_path = os.path.join(font_dir, font_file)
                     QFontDatabase.addApplicationFont(font_path)
-                    print(font_path)
+
+        # Загружаем Azo Sans
+        azo_sans_path = os.path.join(font_dir, "azo-sans-8.ttf")
+        if os.path.exists(azo_sans_path):
+             QFontDatabase.addApplicationFont(azo_sans_path)
 
         app_font = QFont("Lato", 10)
         self.setFont(app_font)
@@ -1073,7 +1100,7 @@ class MainWindow(QMainWindow):
                 background-color: #FFFFFF;
                 border-radius: 4px;
                 padding: 5px;
-                border: 1px solid #000000; /* Чёрная рамка */
+                /* border: 1px solid #000000; Убрана рамка */
             }
         """)
         self.vm_template_layout = QVBoxLayout(self.vm_template_wrapper)
@@ -1228,4 +1255,3 @@ class MainWindow(QMainWindow):
         # Открываем новое окно туториала
         tutorial = TutorialDialog()
         tutorial.exec()
-

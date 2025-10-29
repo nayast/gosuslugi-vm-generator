@@ -13,7 +13,7 @@ import re
 from pathlib import Path
 from lxml import etree
 from fuzzywuzzy import fuzz, process
-from core.main import generate_temp
+import core.final_gen
 # === Пути ===
 FORM_PATH = Path("схема услуги.json")
 XSD_PATH = Path("схема вида сведений.xsd")
@@ -111,9 +111,10 @@ def generate_vm(mapping : dict[str,str]):
 # === Основная программа ===
 def generate_template(json_form_path : str, xsd_path : str) -> str:
     # return generate_temp(xsd_path, json_form_path)
-    form = load_json(json_form_path)
-    form_fields = parse_form_field_names(form)
-    xsd_tags = parse_xsd_tags(xsd_path)
-    mapping = build_mapping(form_fields, xsd_tags, threshold=FUZZY_THRESHOLD)
-    vm_text = generate_vm(mapping)
-    return vm_text
+    return core.final_gen.main(xsd_path)
+    # form = load_json(json_form_path)
+    # form_fields = parse_form_field_names(form)
+    # xsd_tags = parse_xsd_tags(xsd_path)
+    # mapping = build_mapping(form_fields, xsd_tags, threshold=FUZZY_THRESHOLD)
+    # vm_text = generate_vm(mapping)
+    # return vm_text

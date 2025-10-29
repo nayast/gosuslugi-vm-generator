@@ -1,9 +1,0 @@
-#set($Email = $context['contact']['email'])
-
-<Person>
-  <FamilyName>$!{NotFound}  </FamilyName>
-  <GivenName>$!{NotFound}  </GivenName>
-  <Contact>
-    <Email>$!{Email}    </Email>
-  </Contact>
-</Person>

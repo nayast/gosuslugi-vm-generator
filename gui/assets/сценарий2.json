@@ -1,0 +1,779 @@
+{
+  "serviceCode": "60071831",
+  "targetCode": "-60071831",
+  "orderId": 4651668187,
+  "currentScenarioId": 1,
+  "serviceDescriptorId": "60071831",
+  "currentUrl": "https://svcdev-beta.test.gosuslugi.ru/671831/1/form",
+  "finishedAndCurrentScreens": [
+    "Start",
+    "ApplicantQuestion",
+    "s10",
+    "s102",
+    "s1",
+    "s64",
+    "s23",
+    "s3",
+    "s39",
+    "CertificateDeathMotherQuestion",
+    "PayQuestion",
+    "s13",
+    "s54",
+    "Personal",
+    "s20",
+    "s21",
+    "AddressReg",
+    "s25",
+    "s27",
+    "ParentAddressReg",
+    "s38",
+    "EMPTYRegionAgent",
+    "s69",
+    "s8",
+    "s15",
+    "s17",
+    "s22",
+    "s61",
+    "s60",
+    "es3_2800",
+    "s28",
+    "s32",
+    "s33",
+    "s62",
+    "s56",
+    "s55",
+    "s40",
+    "s41",
+    "s42",
+    "s46",
+    "s48",
+    "s50",
+    "s51"
+  ],
+  "cachedAnswers": {},
+  "currentValue": {
+    "c40": {
+      "visited": true,
+      "value": "{\"id\":\"da570df7-de27-4b16-8d3f-3fb322ad018c\",\"text\":\"ОГКУ ЦСПН Калининград\",\"originalItem\":{\"value\":\"da570df7-de27-4b16-8d3f-3fb322ad018c\",\"title\":\"1\",\"isLeaf\":true,\"children\":[],\"attributes\":[{\"name\":\"CODE\",\"type\":\"STRING\",\"value\":{\"asString\":\"da570df7-de27-4b16-8d3f-3fb322ad018c\",\"typeOfValue\":\"STRING\",\"value\":\"da570df7-de27-4b16-8d3f-3fb322ad018c\"},\"valueAsOfType\":\"da570df7-de27-4b16-8d3f-3fb322ad018c\"},{\"name\":\"SERVICE_CODE\",\"type\":\"STRING\",\"value\":{\"asString\":\"1\",\"typeOfValue\":\"STRING\",\"value\":\"1\"},\"valueAsOfType\":\"1\"},{\"name\":\"NAME\",\"type\":\"STRING\",\"value\":{\"asString\":\"Центр социальной поддержки населения Калининград\",\"typeOfValue\":\"STRING\",\"value\":\"Центр социальной поддержки населения Калининград\"},\"valueAsOfType\":\"Центр социальной поддержки населения Калининград\"},{\"name\":\"SHORT_NAME\",\"type\":\"STRING\",\"value\":{\"asString\":\"ОГКУ ЦСПН Калининград\",\"typeOfValue\":\"STRING\",\"value\":\"ОГКУ ЦСПН Калининград\"},\"valueAsOfType\":\"ОГКУ ЦСПН Калининград\"},{\"name\":\"ADDRESS\",\"type\":\"STRING\",\"value\":{\"asString\":\"236010, Калининградская область, Калининград, г.Калининград, ул.Геологическая, д. 1\",\"typeOfValue\":\"STRING\",\"value\":\"236010, Калининградская область, Калининград, г.Калининград, ул.Геологическая, д. 1\"},\"valueAsOfType\":\"236010, Калининградская область, Калининград, г.Калининград, ул.Геологическая, д. 1\"},{\"name\":\"TELEFON\",\"type\":\"STRING\",\"value\":{\"asString\":\"8 800 201-39-00 (доб 3)\",\"typeOfValue\":\"STRING\",\"value\":\"8 800 201-39-00 (доб 3)\"},\"valueAsOfType\":\"8 800 201-39-00 (доб 3)\"},{\"name\":\"EMAIL\",\"type\":\"STRING\",\"value\":{\"asString\":\"center-social@soc.gov39.ru\",\"typeOfValue\":\"STRING\",\"value\":\"center-social@soc.gov39.ru\"},\"valueAsOfType\":\"center-social@soc.gov39.ru\"}],\"attributeValues\":{\"CODE\":\"da570df7-de27-4b16-8d3f-3fb322ad018c\",\"TELEFON\":\"8 800 201-39-00 (доб 3)\",\"SERVICE_CODE\":\"1\",\"ADDRESS\":\"236010, Калининградская область, Калининград, г.Калининград, ул.Геологическая, д. 1\",\"EMAIL\":\"center-social@soc.gov39.ru\",\"SHORT_NAME\":\"ОГКУ ЦСПН Калининград\",\"NAME\":\"Центр социальной поддержки населения Калининград\"}}}",
+      "disabled": false
+    },
+    "c97": {
+      "visited": true,
+      "disabled": false
+    }
+  },
+  "errors": {},
+  "uniquenessErrors": [],
+  "applicantAnswers": {
+    "StartInfo": {
+      "visited": true
+    },
+    "ApplicantChoice": {
+      "visited": true,
+      "value": "v2"
+    },
+    "c9": {
+      "visited": true,
+      "value": "2"
+    },
+    "c1": {
+      "visited": true,
+      "value": "1"
+    },
+    "c3": {
+      "visited": true,
+      "value": "2"
+    },
+    "ValueCalculator_reason": {
+      "visited": true,
+      "value": "{\"arguments\":{\"reason\":\"[{\\\"title\\\":\\\"Смерть\\\",\\\"code\\\":\\\"1\\\"},{\\\"title\\\":\\\"Признание безвестно отсутствующей\\\",\\\"code\\\":\\\"2\\\"}]\"}}"
+    },
+    "c11": {
+      "visited": true
+    },
+    "c56": {
+      "visited": true,
+      "value": "{\"title\":\"Смерть\",\"code\":\"1\"}"
+    },
+    "c33": {
+      "visited": true,
+      "value": "2"
+    },
+    "c84": {
+      "visited": true
+    },
+    "CertificateDeathChoice": {
+      "visited": true,
+      "value": "frn"
+    },
+    "PayChoice": {
+      "visited": true,
+      "value": "v1"
+    },
+    "c23": {
+      "visited": true
+    },
+    "c100": {
+      "visited": true
+    },
+    "PersonalInfo": {
+      "visited": true,
+      "value": "{\"states\":[{\"groupName\":\"Петрова Ирина Ивановна\",\"fields\":[{\"label\":\"Дата рождения\",\"value\":\"01.11.2004\"},{\"label\":\"Место рождения\",\"value\":\"г. Калининград\"}]},{\"groupName\":\"Паспорт гражданина РФ\",\"fields\":[{\"label\":\"Серия и номер\",\"value\":\"1232 333232\"},{\"label\":\"Дата выдачи\",\"value\":\"01.09.2025\"},{\"label\":\"Кем выдан\",\"value\":\"УФМС по г. Калининград\"},{\"label\":\"Код подразделения\",\"value\":\"123-213\"},{\"label\":\"СНИЛС\",\"value\":\"000-123-321 50\"}]}],\"storedValues\":{\"firstName\":\"Ирина\",\"lastName\":\"Петрова\",\"middleName\":\"Ивановна\",\"birthDate\":\"01.11.2004\",\"birthPlace\":\"г. Калининград\",\"gender\":\"F\",\"genderFull\":\"Женский\",\"rfPasportSeries\":\"1232\",\"rfPasportNumber\":\"333232\",\"rfPasportIssueDate\":\"01.09.2025\",\"rfPasportIssuedBy\":\"УФМС по г. Калининград\",\"rfPasportIssuedById\":\"123213\",\"rfPasportIssuedByIdFormatted\":\"123-213\",\"citizenship\":\"РОССИЯ\",\"citizenshipCode\":\"RUS\",\"snils\":\"000-123-321 50\",\"docType\":\"RF_PASSPORT\"},\"errors\":[]}"
+    },
+    "c43": {
+      "visited": true,
+      "value": "+7(911)4665763"
+    },
+    "c44": {
+      "visited": true,
+      "value": "d.volin@gov39.ru"
+    },
+    "AddressRegInfo": {
+      "visited": true,
+      "value": "{\"address\":{\"regionType\":\"область\",\"regionShortType\":\"обл\",\"region\":\"Калининградская\",\"cityType\":\"город\",\"cityShortType\":\"г\",\"city\":\"Калининград\",\"districtType\":\"\",\"districtShortType\":\"\",\"district\":\"\",\"townType\":\"\",\"townShortType\":\"\",\"town\":\"\",\"additionalTownType\":\"\",\"additionalTownShortType\":\"\",\"additionalTown\":\"\",\"inCityDistType\":\"\",\"inCityDistShortType\":\"\",\"inCityDist\":\"\",\"streetType\":\"улица\",\"streetShortType\":\"ул\",\"street\":\"Горького\",\"additionalAreaType\":\"\",\"additionalAreaShortType\":\"\",\"additionalArea\":\"\",\"additionalStreetType\":\"\",\"additionalStreetShortType\":\"\",\"additionalStreet\":\"\",\"houseType\":\"дом\",\"houseShortType\":\"д\",\"house\":\"1\",\"houseCheckbox\":false,\"houseCheckboxClosed\":false,\"building1Type\":\"\",\"building1ShortType\":\"\",\"building1\":\"\",\"building2Type\":\"\",\"building2ShortType\":\"\",\"building2\":\"\",\"apartmentType\":\"\",\"apartmentShortType\":\"\",\"apartment\":\"\",\"litera\":\"\",\"literaType\":\"\",\"literaShortType\":\"\",\"room\":\"\",\"roomType\":\"\",\"roomShortType\":\"\",\"stead\":\"\",\"steadType\":\"\",\"steadShortType\":\"\",\"apartmentCheckbox\":true,\"apartmentCheckboxClosed\":false,\"index\":\"236040\",\"geoLat\":\"54.723257\",\"geoLon\":\"20.507945\",\"fullAddress\":\"236040, обл. Калининградская, г. Калининград, ул. Горького, д. 1\",\"addressStr\":\"обл. Калининградская, г. Калининград, ул. Горького, д. 1\",\"lat\":\"54.723257\",\"lng\":\"20.507945\",\"kladrCode\":\"3900000100002130005\",\"fiasCode\":\"42a79fa8-0278-4932-969c-8115f4d65dc3\",\"regionFias\":\"90c7181e-724f-41b3-b6c6-bd3ec7ae3f30\",\"regionKladr\":\"3900000000000\",\"townFias\":\"\",\"townKladr\":\"\",\"streetFias\":\"eb2fa5a8-1887-453a-af08-82e00f5c2c65\",\"streetKladr\":\"39000001000021300\",\"houseFias\":\"42a79fa8-0278-4932-969c-8115f4d65dc3\",\"houseKladr\":\"3900000100002130005\",\"apartmentFias\":\"\",\"apartmentKladr\":\"\",\"okato\":\"27401368000\",\"oktmo\":\"27701000001\",\"hasErrors\":0,\"regionCode\":\"39\",\"postalCode\":\"236040\",\"oktmoName\":\"\",\"esiaAddressSrt\":\"236040, обл. Калининградская, г. Калининград, ул. Горького, д. 1\",\"esiaFullAddress\":\"236040, обл. Калининградская, г. Калининград, ул. Горького, д. 1\"},\"registrationData\":{}}"
+    },
+    "c58": {
+      "visited": true,
+      "value": "Иванов"
+    },
+    "c59": {
+      "visited": true,
+      "value": "Иван"
+    },
+    "c60": {
+      "visited": true,
+      "value": "Иванович"
+    },
+    "c61": {
+      "visited": true,
+      "value": "1994-10-01T00:00:00.000+02:00"
+    },
+    "c62": {
+      "visited": true,
+      "value": "город Калининград"
+    },
+    "c63": {
+      "visited": true,
+      "value": "000-000-000 00"
+    },
+    "c8": {
+      "visited": true,
+      "value": "+7 111 111-11-11"
+    },
+    "c65": {
+      "visited": true,
+      "value": "11@11.ru"
+    },
+    "c66": {
+      "visited": true,
+      "value": "1"
+    },
+    "c75": {
+      "visited": true,
+      "value": "{\"series\":\"2143\",\"number\":\"341241\",\"date\":\"2025-10-01T00:00:00.000+02:00\",\"emitter\":\"УФМС\",\"issueId\":\"235-235\"}"
+    },
+    "ParentAddressRegInfo": {
+      "visited": true,
+      "value": "{\"regionType\":\"область\",\"regionShortType\":\"обл\",\"region\":\"Калининградская\",\"cityType\":\"город\",\"cityShortType\":\"г\",\"city\":\"Калининград\",\"districtType\":\"\",\"districtShortType\":\"\",\"district\":\"\",\"townType\":\"\",\"townShortType\":\"\",\"town\":\"\",\"additionalTownType\":\"\",\"additionalTownShortType\":\"\",\"additionalTown\":\"\",\"inCityDistType\":\"\",\"inCityDistShortType\":\"\",\"inCityDist\":\"\",\"streetType\":\"улица\",\"streetShortType\":\"ул\",\"street\":\"Уральская\",\"additionalAreaType\":\"\",\"additionalAreaShortType\":\"\",\"additionalArea\":\"\",\"additionalStreetType\":\"\",\"additionalStreetShortType\":\"\",\"additionalStreet\":\"\",\"houseType\":\"дом\",\"houseShortType\":\"д\",\"house\":\"2\",\"houseCheckbox\":false,\"houseCheckboxClosed\":false,\"building1Type\":\"\",\"building1ShortType\":\"\",\"building1\":\"\",\"building2Type\":\"\",\"building2ShortType\":\"\",\"building2\":\"\",\"apartmentType\":\"квартира\",\"apartmentShortType\":\"кв\",\"apartment\":\"1\",\"litera\":\"\",\"literaType\":\"\",\"literaShortType\":\"\",\"room\":\"\",\"roomType\":\"\",\"roomShortType\":\"\",\"stead\":\"\",\"steadType\":\"\",\"steadShortType\":\"\",\"apartmentCheckbox\":false,\"apartmentCheckboxClosed\":false,\"index\":\"236022\",\"geoLat\":\"54.7237648\",\"geoLon\":\"20.5001233\",\"fullAddress\":\"236022, обл. Калининградская, г. Калининград, ул. Уральская, д. 2, кв. 1\",\"addressStr\":\"обл. Калининградская, г. Калининград, ул. Уральская\",\"lat\":\"54.7237648\",\"lng\":\"20.5001233\",\"kladrCode\":\"3900000100008600001\",\"fiasCode\":\"57bbde52-757f-4b27-90e9-31a254e507e9\",\"regionFias\":\"90c7181e-724f-41b3-b6c6-bd3ec7ae3f30\",\"regionKladr\":\"3900000000000\",\"townFias\":\"\",\"townKladr\":\"\",\"streetFias\":\"d39f302d-7b97-4baf-806d-e82241454b63\",\"streetKladr\":\"39000001000086000\",\"houseFias\":\"49734422-3a0a-4ea3-b552-ddfb7b1a2bcb\",\"houseKladr\":\"3900000100008600001\",\"apartmentFias\":\"57bbde52-757f-4b27-90e9-31a254e507e9\",\"apartmentKladr\":\"3900000100008600001\",\"okato\":\"27401385000\",\"oktmo\":\"27701000001\",\"hasErrors\":0,\"regionCode\":\"39\",\"postalCode\":\"\",\"oktmoName\":\"\",\"esiaAddressSrt\":\"\",\"esiaFullAddress\":\"\",\"isNormalizedAddress\":true}"
+    },
+    "c4": {
+      "visited": true,
+      "value": "1"
+    },
+    "ValueCalculator1": {
+      "visited": true,
+      "value": "{\"arguments\":{\"checkRegion\":\"ok\"}}"
+    },
+    "Redirect1": {
+      "visited": true
+    },
+    "c136": {
+      "visited": true
+    },
+    "c64": {
+      "visited": true
+    },
+    "c73": {
+      "visited": true
+    },
+    "c88": {
+      "visited": true
+    },
+    "c89": {
+      "visited": true
+    },
+    "c121": {
+      "visited": true
+    },
+    "c112": {
+      "visited": true,
+      "value": "[{\"c120\":\"город Калининград\",\"sc38_2800\":{\"id\":\"sc38_2800\",\"type\":\"FileUploadComponent\",\"uploads\":[{\"uploadId\":\"doc445f838f-dd16-4ab5-b633-8484557ba4b5\",\"value\":[{\"fileUid\":4651668187,\"objectId\":4651668187,\"objectTypeId\":2,\"mnemonic\":\"sc38_2800.FileUploadComponent.doc445f838f-dd16-4ab5-b633-8484557ba4b5.4651668187\",\"fileName\":\"Тестовый документ.pdf\",\"fileExt\":\"pdf\",\"fileSize\":186560,\"fileHash\":\"gyfEABoaykRmLsBTJ3+j/z8EyFlX1hflMSVp16mq+gA=\",\"mimeType\":\"application/pdf\",\"hasSign\":false,\"created\":\"2025-10-23T09:44:52.518Z\",\"updated\":\"2025-10-23T09:44:52.581Z\",\"realPath\":\"10/23/0/29/e5018366-6c88-4b19-b228-7ed480c324a1\",\"deleted\":false,\"bucket\":\"epgu-svcdev\",\"userId\":1000715745,\"expirationDate\":\"2026-01-21T09:44:52.528Z\",\"s3EndpointCode\":\"vk\",\"storageType\":\"S\",\"status\":\"WITHOUT_VERIFICATION\",\"alternativeMimeTypes\":[],\"objectType\":2,\"uploaded\":true}],\"required\":true},{\"uploadId\":\"doc2445f838f-dd16-4ab5-b633-8484557ba4b5\",\"value\":[{\"fileUid\":4651668187,\"objectId\":4651668187,\"objectTypeId\":2,\"mnemonic\":\"sc38_2800.FileUploadComponent.doc2445f838f-dd16-4ab5-b633-8484557ba4b5.4651668187\",\"fileName\":\"Тестовый документ — копия.pdf\",\"fileExt\":\"pdf\",\"fileSize\":186560,\"fileHash\":\"gyfEABoaykRmLsBTJ3+j/z8EyFlX1hflMSVp16mq+gA=\",\"mimeType\":\"application/pdf\",\"hasSign\":false,\"created\":\"2025-10-23T09:44:56.733Z\",\"updated\":\"2025-10-23T09:44:56.790Z\",\"realPath\":\"10/23/0/86/818f7e4f-bf24-4579-8a7c-6c544237d1b3\",\"deleted\":false,\"bucket\":\"epgu-svcdev\",\"userId\":1000715745,\"expirationDate\":\"2026-01-21T09:44:56.738Z\",\"s3EndpointCode\":\"vk\",\"storageType\":\"S\",\"status\":\"WITHOUT_VERIFICATION\",\"alternativeMimeTypes\":[],\"objectType\":2,\"uploaded\":true}],\"required\":true}],\"totalCount\":2,\"totalSize\":373120},\"c118\":\"2025-10-01T00:00:00.000+02:00\",\"c117\":\"Иванович\",\"sc36_2800\":{\"series\":\"1\",\"number\":\"1213213\",\"date\":\"2025-10-01T00:00:00.000+02:00\",\"emitter\":\"Иностранный орган\"},\"c119\":\"M\",\"c108\":\"1\",\"c114\":\"445f838f-dd16-4ab5-b633-8484557ba4b5\",\"c116\":\"Олег\",\"c115\":\"Иванов\",\"sc17_2800\":\"2\"},{\"c120\":\"город Светлогорск\",\"sc24_2800\":\"2010-10-01T00:00:00.000+03:00\",\"sc26_2800\":{\"id\":\"R3900023\",\"text\":\"Бюро ЗАГС г. Светлогорска Управления МВД по Калининградской области\",\"originalItem\":{\"pr3\":\"false\",\"code\":\"R3900023\",\"dataNi\":19471201,\"code_new\":\"93900023\",\"dataKi\":19501130,\"fullname\":\"Бюро ЗАГС г. Светлогорска Управления МВД по Калининградской области\",\"dataN\":\"1947-12-01\",\"dataK\":\"1950-11-30\"}},\"sc23_2800\":\"\",\"c118\":\"2010-10-01T00:00:00.000+03:00\",\"c117\":\"Иванович\",\"c119\":\"M\",\"sc22_2800\":\"\",\"c108\":\"1\",\"c114\":\"5cbc35b3-13f6-458f-b782-98c6a01f2d13\",\"c116\":\"Петр\",\"sc25_2800\":\"213\",\"c115\":\"Иванов\",\"sc17_2800\":\"1\"},{\"c120\":\"город Калининград\",\"sc24_2800\":\"2019-10-02T00:00:00.000+02:00\",\"sc26_2800\":{\"id\":\"R3900004\",\"text\":\"Отдел ЗАГС администрации Балтийского района городского округа \\\"Город Калининград\\\"\",\"originalItem\":{\"pr3\":\"false\",\"code\":\"R3900004\",\"dataNi\":20080122,\"code_new\":\"93900004\",\"dataKi\":20071231,\"fullname\":\"Отдел ЗАГС администрации Балтийского района городского округа \\\"Город Калининград\\\"\",\"dataN\":\"2008-01-22\",\"dataK\":\"2007-12-31\"}},\"sc23_2800\":\"\",\"c118\":\"2019-10-02T00:00:00.000+02:00\",\"c117\":\"Ивановна\",\"c119\":\"F\",\"sc22_2800\":\"\",\"c108\":\"1\",\"c114\":\"f3742dc5-a875-4f4d-af41-c5d9ff2e45e3\",\"c116\":\"Мария\",\"sc25_2800\":\"45\",\"c115\":\"Иванова\",\"sc17_2800\":\"1\"}]"
+    },
+    "sc50_2800": {
+      "visited": true
+    },
+    "c54": {
+      "visited": true
+    },
+    "c74": {
+      "visited": true
+    },
+    "c29": {
+      "visited": true,
+      "value": "3"
+    },
+    "c35": {
+      "visited": true,
+      "value": "{\"regionType\":\"область\",\"regionShortType\":\"обл\",\"region\":\"Калининградская\",\"cityType\":\"город\",\"cityShortType\":\"г\",\"city\":\"Калининград\",\"districtType\":\"\",\"districtShortType\":\"\",\"district\":\"\",\"townType\":\"\",\"townShortType\":\"\",\"town\":\"\",\"additionalTownType\":\"\",\"additionalTownShortType\":\"\",\"additionalTown\":\"\",\"inCityDistType\":\"\",\"inCityDistShortType\":\"\",\"inCityDist\":\"\",\"streetType\":\"улица\",\"streetShortType\":\"ул\",\"street\":\"Ульяновская\",\"additionalAreaType\":\"\",\"additionalAreaShortType\":\"\",\"additionalArea\":\"\",\"additionalStreetType\":\"\",\"additionalStreetShortType\":\"\",\"additionalStreet\":\"\",\"houseType\":\"дом\",\"houseShortType\":\"д\",\"house\":\"1\",\"houseCheckbox\":false,\"houseCheckboxClosed\":false,\"building1Type\":\"\",\"building1ShortType\":\"\",\"building1\":\"\",\"building2Type\":\"\",\"building2ShortType\":\"\",\"building2\":\"\",\"apartmentType\":\"\",\"apartmentShortType\":\"\",\"apartment\":\"\",\"litera\":\"\",\"literaType\":\"\",\"literaShortType\":\"\",\"room\":\"\",\"roomType\":\"\",\"roomShortType\":\"\",\"stead\":\"\",\"steadType\":\"\",\"steadShortType\":\"\",\"apartmentCheckbox\":true,\"apartmentCheckboxClosed\":true,\"index\":\"236017\",\"geoLat\":\"54.712013\",\"geoLon\":\"20.4559202\",\"fullAddress\":\"236017, обл. Калининградская, г. Калининград, ул. Ульяновская, д. 1\",\"addressStr\":\"обл. Калининградская, г. Калининград, ул. Ульяновская\",\"lat\":\"54.712013\",\"lng\":\"20.4559202\",\"kladrCode\":\"3900000100008580001\",\"fiasCode\":\"95fe1b5d-acd6-42de-a1f1-49283c849312\",\"regionFias\":\"90c7181e-724f-41b3-b6c6-bd3ec7ae3f30\",\"regionKladr\":\"3900000000000\",\"townFias\":\"\",\"townKladr\":\"\",\"streetFias\":\"beb9a583-a131-4684-8e75-a608d662d064\",\"streetKladr\":\"39000001000085800\",\"houseFias\":\"95fe1b5d-acd6-42de-a1f1-49283c849312\",\"houseKladr\":\"3900000100008580001\",\"apartmentFias\":\"\",\"apartmentKladr\":\"\",\"okato\":\"27401385000\",\"oktmo\":\"27701000001\",\"hasErrors\":0,\"regionCode\":\"39\",\"postalCode\":\"\",\"oktmoName\":\"\",\"esiaAddressSrt\":\"\",\"esiaFullAddress\":\"\",\"isNormalizedAddress\":false}"
+    },
+    "c102": {
+      "visited": true
+    },
+    "c101": {
+      "visited": true,
+      "value": "{\"id\":\"c101\",\"type\":\"FileUploadComponent\",\"uploads\":[{\"uploadId\":\"doc\",\"value\":[{\"fileUid\":4651668187,\"objectId\":4651668187,\"objectTypeId\":2,\"mnemonic\":\"c101.FileUploadComponent.doc.4651668188\",\"fileName\":\"Тестовый документ.pdf\",\"fileExt\":\"pdf\",\"fileSize\":186560,\"fileHash\":\"gyfEABoaykRmLsBTJ3+j/z8EyFlX1hflMSVp16mq+gA=\",\"mimeType\":\"application/pdf\",\"hasSign\":false,\"created\":\"2025-10-23T09:46:49.792Z\",\"updated\":\"2025-10-23T09:46:49.853Z\",\"realPath\":\"10/23/0/67/30d69e37-7596-4352-9208-4572bf41adb2\",\"deleted\":false,\"bucket\":\"epgu-svcdev\",\"userId\":1000715745,\"expirationDate\":\"2026-01-21T09:46:49.798Z\",\"s3EndpointCode\":\"vk\",\"storageType\":\"S\",\"status\":\"WITHOUT_VERIFICATION\",\"alternativeMimeTypes\":[],\"objectType\":2,\"uploaded\":true}],\"required\":true}],\"totalCount\":1,\"totalSize\":186560}"
+    },
+    "c52": {
+      "visited": true
+    },
+    "c85": {
+      "visited": true
+    },
+    "c86": {
+      "visited": true
+    },
+    "c90": {
+      "visited": true
+    },
+    "c94": {
+      "visited": true,
+      "value": "{\"id\":\"c94\",\"type\":\"FileUploadComponent\",\"uploads\":[{\"uploadId\":\"doc0001\",\"value\":[{\"fileUid\":4651668187,\"objectId\":4651668187,\"objectTypeId\":2,\"mnemonic\":\"c94.FileUploadComponent.doc0001.4651668187\",\"fileName\":\"Тестовый документ.pdf\",\"fileExt\":\"pdf\",\"fileSize\":186560,\"fileHash\":\"gyfEABoaykRmLsBTJ3+j/z8EyFlX1hflMSVp16mq+gA=\",\"mimeType\":\"application/pdf\",\"hasSign\":false,\"created\":\"2025-10-23T09:46:58.618Z\",\"updated\":\"2025-10-23T09:46:58.684Z\",\"realPath\":\"10/23/0/17/25f70590-cf17-444e-9586-cc4e30fd55e9\",\"deleted\":false,\"bucket\":\"epgu-svcdev\",\"userId\":1000715745,\"expirationDate\":\"2026-01-21T09:46:58.631Z\",\"s3EndpointCode\":\"vk\",\"storageType\":\"S\",\"status\":\"WITHOUT_VERIFICATION\",\"alternativeMimeTypes\":[],\"objectType\":2,\"uploaded\":true}],\"required\":true},{\"uploadId\":\"doc2\",\"value\":[{\"fileUid\":4651668187,\"objectId\":4651668187,\"objectTypeId\":2,\"mnemonic\":\"c94.FileUploadComponent.doc2.4651668187\",\"fileName\":\"Тестовый документ — копия.pdf\",\"fileExt\":\"pdf\",\"fileSize\":186560,\"fileHash\":\"gyfEABoaykRmLsBTJ3+j/z8EyFlX1hflMSVp16mq+gA=\",\"mimeType\":\"application/pdf\",\"hasSign\":false,\"created\":\"2025-10-23T09:47:04.339Z\",\"updated\":\"2025-10-23T09:47:04.390Z\",\"realPath\":\"10/23/0/66/7cf8c056-16c5-44cb-bb90-7180a0656256\",\"deleted\":false,\"bucket\":\"epgu-svcdev\",\"userId\":1000715745,\"expirationDate\":\"2026-01-21T09:47:04.344Z\",\"s3EndpointCode\":\"vk\",\"storageType\":\"S\",\"status\":\"WITHOUT_VERIFICATION\",\"alternativeMimeTypes\":[],\"objectType\":2,\"uploaded\":true}],\"required\":true}],\"totalCount\":2,\"totalSize\":373120}"
+    },
+    "c96": {
+      "visited": true
+    }
+  },
+  "cycledApplicantAnswers": {
+    "currentAnswerId": "c112",
+    "inCycle": false,
+    "answerlist": [
+      {
+        "id": "c112",
+        "initScreen": "s60",
+        "currentItemId": "f3742dc5-a875-4f4d-af41-c5d9ff2e45e3",
+        "items": [
+          {
+            "id": "445f838f-dd16-4ab5-b633-8484557ba4b5",
+            "uniqueKeys": [],
+            "fieldToId": {
+              "birthDate": "c118",
+              "gender": "c119",
+              "id": "c114",
+              "firstName": "c116",
+              "lastName": "c115"
+            },
+            "itemAnswers": {
+              "c120": {
+                "visited": true,
+                "value": "город Калининград"
+              },
+              "c118": {
+                "visited": true,
+                "value": "2025-10-01T00:00:00.000+02:00"
+              },
+              "c117": {
+                "visited": true,
+                "value": "Иванович"
+              },
+              "c119": {
+                "visited": true,
+                "value": "M"
+              },
+              "c114": {
+                "visited": true,
+                "value": "445f838f-dd16-4ab5-b633-8484557ba4b5"
+              },
+              "c116": {
+                "visited": true,
+                "value": "Олег"
+              },
+              "c115": {
+                "visited": true,
+                "value": "Иванов"
+              },
+              "sc17_2800": {
+                "visited": true,
+                "value": "2"
+              },
+              "sc36_2800": {
+                "visited": true,
+                "value": "{\"series\":\"1\",\"number\":\"1213213\",\"date\":\"2025-10-01T00:00:00.000+02:00\",\"emitter\":\"Иностранный орган\",\"issueId\":null}"
+              },
+              "sc38_2800": {
+                "visited": true,
+                "value": "{\"id\":\"sc38_2800\",\"type\":\"FileUploadComponent\",\"uploads\":[{\"uploadId\":\"doc445f838f-dd16-4ab5-b633-8484557ba4b5\",\"value\":[{\"fileUid\":4651668187,\"objectId\":4651668187,\"objectTypeId\":2,\"mnemonic\":\"sc38_2800.FileUploadComponent.doc445f838f-dd16-4ab5-b633-8484557ba4b5.4651668187\",\"fileName\":\"Тестовый документ.pdf\",\"fileExt\":\"pdf\",\"fileSize\":186560,\"fileHash\":\"gyfEABoaykRmLsBTJ3+j/z8EyFlX1hflMSVp16mq+gA=\",\"mimeType\":\"application/pdf\",\"hasSign\":false,\"created\":\"2025-10-23T09:44:52.518Z\",\"updated\":\"2025-10-23T09:44:52.581Z\",\"realPath\":\"10/23/0/29/e5018366-6c88-4b19-b228-7ed480c324a1\",\"deleted\":false,\"bucket\":\"epgu-svcdev\",\"userId\":1000715745,\"expirationDate\":\"2026-01-21T09:44:52.528Z\",\"s3EndpointCode\":\"vk\",\"storageType\":\"S\",\"status\":\"WITHOUT_VERIFICATION\",\"alternativeMimeTypes\":[],\"objectType\":2,\"uploaded\":true}],\"required\":true},{\"uploadId\":\"doc2445f838f-dd16-4ab5-b633-8484557ba4b5\",\"value\":[{\"fileUid\":4651668187,\"objectId\":4651668187,\"objectTypeId\":2,\"mnemonic\":\"sc38_2800.FileUploadComponent.doc2445f838f-dd16-4ab5-b633-8484557ba4b5.4651668187\",\"fileName\":\"Тестовый документ — копия.pdf\",\"fileExt\":\"pdf\",\"fileSize\":186560,\"fileHash\":\"gyfEABoaykRmLsBTJ3+j/z8EyFlX1hflMSVp16mq+gA=\",\"mimeType\":\"application/pdf\",\"hasSign\":false,\"created\":\"2025-10-23T09:44:56.733Z\",\"updated\":\"2025-10-23T09:44:56.790Z\",\"realPath\":\"10/23/0/86/818f7e4f-bf24-4579-8a7c-6c544237d1b3\",\"deleted\":false,\"bucket\":\"epgu-svcdev\",\"userId\":1000715745,\"expirationDate\":\"2026-01-21T09:44:56.738Z\",\"s3EndpointCode\":\"vk\",\"storageType\":\"S\",\"status\":\"WITHOUT_VERIFICATION\",\"alternativeMimeTypes\":[],\"objectType\":2,\"uploaded\":true}],\"required\":true}],\"totalCount\":2,\"totalSize\":373120}"
+              },
+              "c108": {
+                "visited": true,
+                "value": "1"
+              }
+            },
+            "cachedAnswers": {},
+            "esiaData": {
+              "birthDate": "2025-10-01T00:00:00.000+02:00",
+              "gender": "M",
+              "id": "445f838f-dd16-4ab5-b633-8484557ba4b5",
+              "firstName": "Олег",
+              "lastName": "Иванов"
+            },
+            "finishedScreens": [
+              "es4_2800",
+              "es9_2800",
+              "es10_2800",
+              "s45"
+            ],
+            "itemCounter": 1,
+            "index": 0
+          },
+          {
+            "id": "5cbc35b3-13f6-458f-b782-98c6a01f2d13",
+            "uniqueKeys": [],
+            "fieldToId": {
+              "birthDate": "c118",
+              "gender": "c119",
+              "id": "c114",
+              "firstName": "c116",
+              "lastName": "c115"
+            },
+            "itemAnswers": {
+              "c120": {
+                "visited": true,
+                "value": "город Светлогорск"
+              },
+              "c118": {
+                "visited": true,
+                "value": "2010-10-01T00:00:00.000+03:00"
+              },
+              "c117": {
+                "visited": true,
+                "value": "Иванович"
+              },
+              "c119": {
+                "visited": true,
+                "value": "M"
+              },
+              "c114": {
+                "visited": true,
+                "value": "5cbc35b3-13f6-458f-b782-98c6a01f2d13"
+              },
+              "c116": {
+                "visited": true,
+                "value": "Петр"
+              },
+              "c115": {
+                "visited": true,
+                "value": "Иванов"
+              },
+              "sc17_2800": {
+                "visited": true,
+                "value": "1"
+              },
+              "sc22_2800": {
+                "visited": true,
+                "value": ""
+              },
+              "sc23_2800": {
+                "visited": true,
+                "value": ""
+              },
+              "sc24_2800": {
+                "visited": true,
+                "value": "2010-10-01T00:00:00.000+03:00"
+              },
+              "sc25_2800": {
+                "visited": true,
+                "value": "213"
+              },
+              "sc26_2800": {
+                "visited": true,
+                "value": "{\"id\":\"R3900023\",\"text\":\"Бюро ЗАГС г. Светлогорска Управления МВД по Калининградской области\",\"originalItem\":{\"pr3\":\"false\",\"code\":\"R3900023\",\"dataNi\":19471201,\"code_new\":\"93900023\",\"dataKi\":19501130,\"fullname\":\"Бюро ЗАГС г. Светлогорска Управления МВД по Калининградской области\",\"dataN\":\"1947-12-01\",\"dataK\":\"1950-11-30\"}}"
+              },
+              "c108": {
+                "visited": true,
+                "value": "1"
+              }
+            },
+            "cachedAnswers": {},
+            "esiaData": {
+              "birthDate": "2010-10-01T00:00:00.000+03:00",
+              "gender": "M",
+              "id": "5cbc35b3-13f6-458f-b782-98c6a01f2d13",
+              "firstName": "Петр",
+              "lastName": "Иванов"
+            },
+            "finishedScreens": [
+              "es4_2800",
+              "es6_2800",
+              "s45"
+            ],
+            "itemCounter": 2,
+            "index": 1
+          },
+          {
+            "id": "f3742dc5-a875-4f4d-af41-c5d9ff2e45e3",
+            "uniqueKeys": [],
+            "fieldToId": {
+              "birthDate": "c118",
+              "gender": "c119",
+              "id": "c114",
+              "firstName": "c116",
+              "lastName": "c115"
+            },
+            "itemAnswers": {
+              "c120": {
+                "visited": true,
+                "value": "город Калининград"
+              },
+              "c118": {
+                "visited": true,
+                "value": "2019-10-02T00:00:00.000+02:00"
+              },
+              "c117": {
+                "visited": true,
+                "value": "Ивановна"
+              },
+              "c119": {
+                "visited": true,
+                "value": "F"
+              },
+              "c114": {
+                "visited": true,
+                "value": "f3742dc5-a875-4f4d-af41-c5d9ff2e45e3"
+              },
+              "c116": {
+                "visited": true,
+                "value": "Мария"
+              },
+              "c115": {
+                "visited": true,
+                "value": "Иванова"
+              },
+              "sc17_2800": {
+                "visited": true,
+                "value": "1"
+              },
+              "sc22_2800": {
+                "visited": true,
+                "value": ""
+              },
+              "sc23_2800": {
+                "visited": true,
+                "value": ""
+              },
+              "sc24_2800": {
+                "visited": true,
+                "value": "2019-10-02T00:00:00.000+02:00"
+              },
+              "sc25_2800": {
+                "visited": true,
+                "value": "45"
+              },
+              "sc26_2800": {
+                "visited": true,
+                "value": "{\"id\":\"R3900004\",\"text\":\"Отдел ЗАГС администрации Балтийского района городского округа \\\"Город Калининград\\\"\",\"originalItem\":{\"pr3\":\"false\",\"code\":\"R3900004\",\"dataNi\":20080122,\"code_new\":\"93900004\",\"dataKi\":20071231,\"fullname\":\"Отдел ЗАГС администрации Балтийского района городского округа \\\"Город Калининград\\\"\",\"dataN\":\"2008-01-22\",\"dataK\":\"2007-12-31\"}}"
+              },
+              "c108": {
+                "visited": true,
+                "value": "1"
+              }
+            },
+            "cachedAnswers": {},
+            "esiaData": {
+              "birthDate": "2019-10-02T00:00:00.000+02:00",
+              "gender": "F",
+              "id": "f3742dc5-a875-4f4d-af41-c5d9ff2e45e3",
+              "firstName": "Мария",
+              "lastName": "Иванова"
+            },
+            "finishedScreens": [
+              "es4_2800",
+              "es6_2800",
+              "s45"
+            ],
+            "itemCounter": 3,
+            "index": 2
+          }
+        ]
+      }
+    ]
+  },
+  "participants": {},
+  "display": {
+    "id": "s51",
+    "name": "s17 - Выбор ТО",
+    "type": "CUSTOM",
+    "header": "Выберите территориальное отделение",
+    "components": [
+      {
+        "id": "c40",
+        "type": "Lookup",
+        "skipValidation": false,
+        "attrs": {
+          "isPullMode": false,
+          "vkuValidationSwitchOn": true,
+          "disabled": false,
+          "searchIconForcedShowing": false,
+          "focusOnInitAndStartSearch": false,
+          "isClearable": true,
+          "mappingParams": {
+            "isRoot": true,
+            "idPath": "attributeValues.CODE",
+            "textPath": "attributeValues.SHORT_NAME"
+          },
+          "dictionaryOptions": {
+            "pageNum": 1
+          },
+          "vkuProvider": false,
+          "showExpandCollapse": false,
+          "validationSwitchOn": "true",
+          "vkuFilterType": "no",
+          "vkuPreset": "no",
+          "testReadOnly": "no",
+          "dictionaryType": "CSZN_KLD_2700",
+          "refs": {}
+        },
+        "arguments": {},
+        "value": "",
+        "required": true,
+        "sendAnalytics": false
+      },
+      {
+        "id": "c97",
+        "type": "LabelSection",
+        "skipValidation": false,
+        "attrs": {
+          "isBottomSlot": false,
+          "interpolationEnabled": true,
+          "ref": [
+            {
+              "relatedRel": "c40",
+              "val": "*",
+              "relation": "displayOn"
+            },
+            {
+              "relatedRel": "c40",
+              "val": "*",
+              "relation": "autoFillTextFromRefs",
+              "relatedRelValues": {
+                "NAME": "originalItem.attributeValues.NAME",
+                "ADDRESS": "originalItem.attributeValues.ADDRESS",
+                "TELEFON": "originalItem.attributeValues.TELEFON"
+              }
+            }
+          ],
+          "refs": {}
+        },
+        "arguments": {},
+        "value": "",
+        "required": true,
+        "sendAnalytics": false
+      }
+    ],
+    "buttons": [
+      {
+        "id": "s51-0",
+        "label": "Отправить заявление",
+        "type": "nextStep",
+        "action": "getNextScreen",
+        "color": "gosblue",
+        "height": ""
+      }
+    ],
+    "hideBackButton": false,
+    "infoComponents": [],
+    "logicAfterValidationComponents": [],
+    "notSendToSp": false,
+    "forceSendToSuggestions": false,
+    "needToUpdateAdditionalParameters": false,
+    "forceDeliriumCall": false,
+    "checkSendPermission": false,
+    "arguments": {},
+    "acceptCookies": [],
+    "accepted": true,
+    "terminal": false,
+    "impasse": false,
+    "firstScreen": false
+  },
+  "logicComponents": [],
+  "serviceInfo": {
+    "department": {
+      "id": "3900000010000000044",
+      "title": "Министерство социальной политики Калининградской области"
+    },
+    "error": "Region not found",
+    "userRegion": {
+      "name": "Калининградская область",
+      "path": "Калининградская область",
+      "codes": [
+        "27000000000"
+      ],
+      "lastRegionCode": "27000000000"
+    },
+    "statusId": 0,
+    "orderType": "ORDER",
+    "queryParams": {},
+    "formId": "form",
+    "proactivityCreated": false,
+    "cookies": {},
+    "deviceType": "desk",
+    "owner": "SF",
+    "agencyNotLegal": false,
+    "userRegionCode": "27000000000",
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 YaBrowser/25.8.0.0 Safari/537.36"
+  },
+  "signInfoMap": {},
+  "attachmentInfo": {
+    "sc38_2800": [
+      {
+        "uploadId": "doc445f838f-dd16-4ab5-b633-8484557ba4b5",
+        "uploadMnemonic": "sc38_2800.FileUploadComponent.doc445f838f-dd16-4ab5-b633-8484557ba4b5.4651668187",
+        "uploadFilename": "Тестовый документ.pdf",
+        "objectId": "4651668187",
+        "objectTypeId": "2",
+        "isNewAttachment": true
+      },
+      {
+        "uploadId": "doc2445f838f-dd16-4ab5-b633-8484557ba4b5",
+        "uploadMnemonic": "sc38_2800.FileUploadComponent.doc2445f838f-dd16-4ab5-b633-8484557ba4b5.4651668187",
+        "uploadFilename": "Тестовый документ — копия.pdf",
+        "objectId": "4651668187",
+        "objectTypeId": "2",
+        "isNewAttachment": true
+      }
+    ],
+    "c101": [
+      {
+        "uploadId": "doc",
+        "uploadMnemonic": "c101.FileUploadComponent.doc.4651668188",
+        "uploadFilename": "Тестовый документ.pdf",
+        "objectId": "4651668187",
+        "objectTypeId": "2",
+        "isNewAttachment": true
+      }
+    ],
+    "c94": [
+      {
+        "uploadId": "doc0001",
+        "uploadMnemonic": "c94.FileUploadComponent.doc0001.4651668187",
+        "uploadFilename": "Тестовый документ.pdf",
+        "objectId": "4651668187",
+        "objectTypeId": "2",
+        "isNewAttachment": true
+      },
+      {
+        "uploadId": "doc2",
+        "uploadMnemonic": "c94.FileUploadComponent.doc2.4651668187",
+        "uploadFilename": "Тестовый документ — копия.pdf",
+        "objectId": "4651668187",
+        "objectTypeId": "2",
+        "isNewAttachment": true
+      }
+    ]
+  },
+  "additionalParameters": {},
+  "serviceParameters": {
+    "empowerment": ""
+  },
+  "generatedFiles": [],
+  "disclaimers": [],
+  "fileGenerateActions": [],
+  "draftVersion": "1",
+  "descriptorOwner": "SF",
+  "cycledApplicantAnswerContext": {
+    "cycledApplicantAnswerItem": {
+      "id": "f3742dc5-a875-4f4d-af41-c5d9ff2e45e3",
+      "uniqueKeys": [],
+      "fieldToId": {
+        "birthDate": "c118",
+        "gender": "c119",
+        "id": "c114",
+        "firstName": "c116",
+        "lastName": "c115"
+      },
+      "itemAnswers": {
+        "c120": {
+          "visited": true,
+          "value": "город Калининград"
+        },
+        "c118": {
+          "visited": true,
+          "value": "2019-10-02T00:00:00.000+02:00"
+        },
+        "c117": {
+          "visited": true,
+          "value": "Ивановна"
+        },
+        "c119": {
+          "visited": true,
+          "value": "F"
+        },
+        "c114": {
+          "visited": true,
+          "value": "f3742dc5-a875-4f4d-af41-c5d9ff2e45e3"
+        },
+        "c116": {
+          "visited": true,
+          "value": "Мария"
+        },
+        "c115": {
+          "visited": true,
+          "value": "Иванова"
+        },
+        "sc17_2800": {
+          "visited": true,
+          "value": "1"
+        },
+        "sc22_2800": {
+          "visited": true,
+          "value": ""
+        },
+        "sc23_2800": {
+          "visited": true,
+          "value": ""
+        },
+        "sc24_2800": {
+          "visited": true,
+          "value": "2019-10-02T00:00:00.000+02:00"
+        },
+        "sc25_2800": {
+          "visited": true,
+          "value": "45"
+        },
+        "sc26_2800": {
+          "visited": true,
+          "value": "{\"id\":\"R3900004\",\"text\":\"Отдел ЗАГС администрации Балтийского района городского округа \\\"Город Калининград\\\"\",\"originalItem\":{\"pr3\":\"false\",\"code\":\"R3900004\",\"dataNi\":20080122,\"code_new\":\"93900004\",\"dataKi\":20071231,\"fullname\":\"Отдел ЗАГС администрации Балтийского района городского округа \\\"Город Калининград\\\"\",\"dataN\":\"2008-01-22\",\"dataK\":\"2007-12-31\"}}"
+        },
+        "c108": {
+          "visited": true,
+          "value": "1"
+        }
+      },
+      "cachedAnswers": {},
+      "esiaData": {
+        "birthDate": "2019-10-02T00:00:00.000+02:00",
+        "gender": "F",
+        "id": "f3742dc5-a875-4f4d-af41-c5d9ff2e45e3",
+        "firstName": "Мария",
+        "lastName": "Иванова"
+      },
+      "finishedScreens": [
+        "es4_2800",
+        "es6_2800",
+        "s45"
+      ],
+      "itemCounter": 3,
+      "index": 2
+    }
+  },
+  "gender": "F"
+}

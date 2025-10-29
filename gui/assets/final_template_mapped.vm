@@ -1,0 +1,148 @@
+<soc:FullyGeneratedVMTemplateFromXSD xmlns:soc="http://socit.ru/kalin/orders/2.0.0" xmlns="http://socit.ru/kalin/orders/2.0.0">
+<soc:CustomControlsValue>
+</soc:CustomControlsValue>
+<soc:AppDataRequest>
+  ## Выбор ветки SetRequest для AppDataRequest_choice
+  #if($request.velocityCount == 1) ## Используем $request.velocityCount или другую переменную
+    <!-- Циклическая зависимость: None -->
+  #end
+  ## Выбор ветки cancelRequest для AppDataRequest_choice
+  #if($request.velocityCount == 2) ## Используем $request.velocityCount или другую переменную
+    <soc:cancelRequest>
+$request.orderId$request.reason    </soc:cancelRequest>
+  #end
+  ## Выбор ветки GetSprav для AppDataRequest_choice
+  #if($request.velocityCount == 3) ## Используем $request.velocityCount или другую переменную
+    <soc:GetSprav>
+$request.ServiceCode$request.TypeSprav    </soc:GetSprav>
+  #end
+  ## Выбор ветки GetSettings для AppDataRequest_choice
+  #if($request.velocityCount == 4) ## Используем $request.velocityCount или другую переменную
+    <soc:GetSettings>
+$request.orderId$request.ServiceCode      <soc:CustomControlListValues Index="$request.Index">
+        <!-- Необработанный simpleContent для Value -->
+      </soc:CustomControlListValues>
+    </soc:GetSettings>
+  #end
+  ## Выбор ветки GetRequiredDocuments для AppDataRequest_choice
+  #if($request.velocityCount == 5) ## Используем $request.velocityCount или другую переменную
+    <soc:GetRequiredDocuments>
+$request.orderId$request.ServiceCode      <soc:CustomControlListValues Index="$request.Index">
+        <!-- Необработанный simpleContent для Value -->
+      </soc:CustomControlListValues>
+    </soc:GetRequiredDocuments>
+  #end
+  ## Выбор ветки GetDocById для AppDataRequest_choice
+  #if($request.velocityCount == 6) ## Используем $request.velocityCount или другую переменную
+    <soc:GetDocById>
+$request.orderId$request.Id    </soc:GetDocById>
+  #end
+  ## Выбор ветки GetCustomControls для AppDataRequest_choice
+  #if($request.velocityCount == 7) ## Используем $request.velocityCount или другую переменную
+    <soc:GetCustomControls>
+$request.orderId$request.ServiceCode      <soc:CustomControlListValues Index="$request.Index">
+        <!-- Необработанный simpleContent для Value -->
+      </soc:CustomControlListValues>
+    </soc:GetCustomControls>
+  #end
+</soc:AppDataRequest>
+<soc:AppDataResponse>
+  ## Выбор ветки OrderInfo для AppDataResponse_choice
+  #if($request.velocityCount == 1) ## Используем $request.velocityCount или другую переменную
+    <!-- Циклическая зависимость: None -->
+  #end
+  ## Выбор ветки CancelResponse для AppDataResponse_choice
+  #if($request.velocityCount == 2) ## Используем $request.velocityCount или другую переменную
+    <soc:CancelResponse>
+$request.orderId$request.result$request.comment    </soc:CancelResponse>
+  #end
+  ## Выбор ветки GetSpravResponse для AppDataResponse_choice
+  #if($request.velocityCount == 3) ## Используем $request.velocityCount или другую переменную
+    <soc:GetSpravResponse>
+      ## Выбор ветки SpravData для GetSpravResponse_choice
+      #if($request.velocityCount == 1) ## Используем $request.velocityCount или другую переменную
+        <soc:SpravData>
+          <soc:SpravId>$request.SpravId</soc:SpravId>
+$request.SpravInfo$request.Address        </soc:SpravData>
+      #end
+      ## Выбор ветки PostData для GetSpravResponse_choice
+      #if($request.velocityCount == 2) ## Используем $request.velocityCount или другую переменную
+        <soc:PostData>
+$request.bankName$request.bik$request.kpp        </soc:PostData>
+      #end
+    </soc:GetSpravResponse>
+  #end
+  ## Выбор ветки GetSettingsResponse для AppDataResponse_choice
+  #if($request.velocityCount == 4) ## Используем $request.velocityCount или другую переменную
+    <soc:GetSettingsResponse>
+      <soc:PGUSettings>
+        <soc:PGUSetting>
+          <soc:AttachIdTitle>$request.AttachIdTitle</soc:AttachIdTitle>
+          <soc:AttachIdRef>$request.AttachIdRef</soc:AttachIdRef>
+          <soc:AttachFileName>$request.AttachFileName</soc:AttachFileName>
+          <soc:Comment>$request.Comment</soc:Comment>
+          <soc:Hide>$request.Hide</soc:Hide>
+          <soc:Require>$request.Require</soc:Require>
+          <soc:Name>$request.Name</soc:Name>
+          <soc:Title>$request.Title</soc:Title>
+        </soc:PGUSetting>
+      </soc:PGUSettings>
+    </soc:GetSettingsResponse>
+  #end
+  ## Выбор ветки GetRequiredDocumentsResponse для AppDataResponse_choice
+  #if($request.velocityCount == 5) ## Используем $request.velocityCount или другую переменную
+    <soc:GetRequiredDocumentsResponse>
+      <soc:ReqDocumentItems>
+        <soc:ReqDocumentItem>
+          <soc:type>$currentValue.cycledScreenRules.es6_2800[4].conditions[0].args[2].type['value']</soc:type>
+          <soc:name>$currentValue.applicationFields[162].name['value']</soc:name>
+          <soc:comment>$request.comment</soc:comment>
+          <soc:quantity>$request.quantity</soc:quantity>
+          <soc:strict>$request.strict</soc:strict>
+          <soc:alreadyExist>$request.alreadyExist</soc:alreadyExist>
+          <soc:AttachIdTitle>$request.AttachIdTitle</soc:AttachIdTitle>
+          <soc:AttachIdRef>$request.AttachIdRef</soc:AttachIdRef>
+          <soc:AttachFileName>$request.AttachFileName</soc:AttachFileName>
+        </soc:ReqDocumentItem>
+      </soc:ReqDocumentItems>
+    </soc:GetRequiredDocumentsResponse>
+  #end
+  ## Выбор ветки GetDocByIdResponse для AppDataResponse_choice
+  #if($request.velocityCount == 6) ## Используем $request.velocityCount или другую переменную
+    <soc:GetDocByIdResponse>
+      <soc:RequestCode>$request.RequestCode</soc:RequestCode>
+      <soc:attachmentsBlock>
+        <soc:attachmentBlock>
+          <soc:AttachmentDescription>
+            <soc:AttachmentSignatureFSLink>$request.AttachmentSignatureFSLink</soc:AttachmentSignatureFSLink>
+          </soc:AttachmentDescription>
+        </soc:attachmentBlock>
+      </soc:attachmentsBlock>
+    </soc:GetDocByIdResponse>
+  #end
+  ## Выбор ветки GetCustomControlsResponse для AppDataResponse_choice
+  #if($request.velocityCount == 7) ## Используем $request.velocityCount или другую переменную
+    <soc:GetCustomControlsResponse>
+      <soc:CustomControls>
+        <soc:CustomControl>
+          <soc:Name>$request.Name</soc:Name>
+          <soc:Type>$request.Type</soc:Type>
+          <soc:ValueName>$request.ValueName</soc:ValueName>
+          <soc:Title>$request.Title</soc:Title>
+          <soc:ValueDefault>$request.ValueDefault</soc:ValueDefault>
+        </soc:CustomControl>
+        <soc:Rules>
+          <soc:Rule>
+            <soc:IF>$request.IF</soc:IF>
+            <soc:THEN>
+              <soc:Hide>$request.Hide</soc:Hide>
+              <soc:Show>$request.Show</soc:Show>
+            </soc:THEN>
+            <soc:Hide>$request.Hide</soc:Hide>
+          </soc:Rule>
+        </soc:Rules>
+      </soc:CustomControls>
+    </soc:GetCustomControlsResponse>
+  #end
+</soc:AppDataResponse>
+</soc:FullyGeneratedVMTemplateFromXSD>

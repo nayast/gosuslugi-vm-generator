@@ -1,0 +1,7 @@
+{
+    "json_schema_path": "C:/Users/1/Desktop/MPITGOSUSLUGI/assets/заявка.json",
+    "json_examples_paths": [
+        "C:/Users/1/Desktop/MPITGOSUSLUGI/assets/схема услуги 1.json"
+    ],
+    "xsd_schema_path": "C:/Users/1/Desktop/MPITGOSUSLUGI/assets/схема вида сведений.xsd"
+}

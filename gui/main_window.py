@@ -769,7 +769,7 @@ class TutorialDialog(QDialog):
         main_layout.setContentsMargins(0, 0, 0, 0)
         main_layout.setSpacing(0)
         self.stacked_widget = QStackedWidget()
-        tutorial_dir = resource_path(r"..\assets\tutorial")
+        tutorial_dir = resource_path(r"assets\tutorial")
         self.slide_images = []
         for i in range(1, 6):
             img_path = os.path.join(f"{tutorial_dir}\step{i}.png")

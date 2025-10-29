@@ -1,0 +1,197 @@
+<!-- Annotation Запрос на выполнение действий. Можно
+сделать одно из 3-х: направить заявление, отменить заявление, запросить справочник -->
+<!-- complex
+content -->
+<soc:AppDataRequest xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soc="http://socit.ru/kalin/orders/2.0.0" xmlns:soc1="http://socit.ru/kalin/orders/2.0.0/attachments">
+<soc:SetRequest>
+<soc:orderId>4651667788</soc:orderId>
+<soc:ServiceCode>3900000000173812673</soc:ServiceCode>
+<soc:ServiceName>Выплата молодой семье при рождении третьего или последующего ребёнка</soc:ServiceName>
+<soc:SpravID>1</soc:SpravID>
+<soc:DelegateInfo>1</soc:DelegateInfo>
+<!--  Пользовательские данные  -->
+<soc:userData>
+<soc:lastName>Петрова</soc:lastName>
+<soc:firstName>Ирина</soc:firstName>
+<soc:middleName>Ивановна</soc:middleName>
+<soc:birthDate>2004-11-01</soc:birthDate>
+<soc:Sex>Ж</soc:Sex>
+<soc:Snils>000-123-321 50</soc:Snils>
+<soc:phone>+7(911)4665763</soc:phone>
+<soc:Email>d.volin@gov39.ru</soc:Email>
+<soc:citizenship>РОССИЯ</soc:citizenship>
+<soc:mrog>г. Калининград</soc:mrog>
+</soc:userData>
+<!--  Паспортные данные пользователя  -->
+<soc:userDocument>
+<soc:type>21</soc:type>
+<soc:series>1232</soc:series>
+<soc:number>333232</soc:number>
+<soc:issuedBy>УФМС по г. Калининград</soc:issuedBy>
+<soc:issueDate>2025-09-01</soc:issueDate>
+<soc:departmentCode>123-213</soc:departmentCode>
+</soc:userDocument>
+<soc:userAdditionalDocuments>
+<soc:AdditionalDocument>
+<soc:type>108</soc:type>
+<soc:number>020250000000000000098</soc:number>
+<soc:issuedBy>Управление ЗАГС администрации городского округа "Город Калининград"</soc:issuedBy>
+<soc:issueDate>2025-10-01</soc:issueDate>
+</soc:AdditionalDocument>
+</soc:userAdditionalDocuments>
+<!--  Представитель заявителя (при наличии)  -->
+<!--  Список детей  -->
+<soc:children>
+<soc:child>
+<soc:childData>
+<soc:lastName>Иванов</soc:lastName>
+<soc:firstName>Иван</soc:firstName>
+<soc:middleName>Иванович</soc:middleName>
+<soc:birthDate>2017-04-25</soc:birthDate>
+<soc:Sex>М</soc:Sex>
+<soc:citizenship>РОССИЯ</soc:citizenship>
+</soc:childData>
+<soc:childDocument>
+<!-- START:[sequence] -->
+<!-- next
+            5 items are in a [sequence] group -->
+<soc:type>106</soc:type>
+<!-- next
+            1 item is optional (minOccurs = 0) -->
+<soc:number>3434343434</soc:number>
+<soc:issuedBy>кпкапк</soc:issuedBy>
+<soc:issueDate>2017-04-25</soc:issueDate>
+<!-- END:[sequence] -->
+</soc:childDocument>
+<!-- next
+            1 item is optional (minOccurs = 0) -->
+<soc:childAdditionally>
+<soc:info name="Адрес ребёнка" parent="Адрес ребёнка">Совпадает с адресом получателя услуги</soc:info>
+</soc:childAdditionally>
+</soc:child>
+<soc:child>
+<soc:childData>
+<soc:lastName>Иванова</soc:lastName>
+<soc:firstName>Мария</soc:firstName>
+<soc:middleName>Олеговна</soc:middleName>
+<soc:birthDate>2012-05-05</soc:birthDate>
+<soc:Sex>Ж</soc:Sex>
+<soc:citizenship>РОССИЯ</soc:citizenship>
+</soc:childData>
+<soc:childDocument>
+<!-- START:[sequence] -->
+<!-- next
+            5 items are in a [sequence] group -->
+<soc:type>106</soc:type>
+<!-- next
+            1 item is optional (minOccurs = 0) -->
+<soc:number>6898565656</soc:number>
+<soc:issuedBy>Калининград</soc:issuedBy>
+<soc:issueDate>2012-05-05</soc:issueDate>
+<!-- END:[sequence] -->
+</soc:childDocument>
+<!-- next
+            1 item is optional (minOccurs = 0) -->
+<soc:childAdditionally>
+<soc:info name="Адрес ребёнка" parent="Адрес ребёнка">Совпадает с адресом получателя услуги</soc:info>
+</soc:childAdditionally>
+</soc:child>
+<soc:child>
+<soc:childData>
+<soc:lastName>Петров</soc:lastName>
+<soc:firstName>Петр</soc:firstName>
+<soc:middleName>Петрович</soc:middleName>
+<soc:birthDate>2008-01-01</soc:birthDate>
+<soc:Sex>М</soc:Sex>
+<soc:citizenship>РОССИЯ</soc:citizenship>
+</soc:childData>
+<soc:childDocument>
+<!-- START:[sequence] -->
+<!-- next
+            5 items are in a [sequence] group -->
+<soc:type>106</soc:type>
+<!-- next
+            1 item is optional (minOccurs = 0) -->
+<soc:number>111111</soc:number>
+<soc:issuedBy>г. Калининград</soc:issuedBy>
+<soc:issueDate>2008-01-01</soc:issueDate>
+<!-- END:[sequence] -->
+</soc:childDocument>
+<!-- next
+            1 item is optional (minOccurs = 0) -->
+<soc:childAddressLive>
+<soc:fiasHouseCode>42a79fa8-0278-4932-969c-8115f4d65dc3</soc:fiasHouseCode>
+<soc:index>236040</soc:index>
+<soc:town>Калининград</soc:town>
+<soc:street>ул Горького</soc:street>
+<soc:house>1</soc:house>
+<soc:strAddress>236040, обл. Калининградская, г. Калининград, ул. Горького, д. 1</soc:strAddress>
+</soc:childAddressLive>
+</soc:child>
+</soc:children>
+<!--  Супруг получателя услуги  -->
+<soc:relatives>
+<soc:relative>
+<soc:relativeCategory>Супруг или супруга получателя услуги</soc:relativeCategory>
+<soc:relativeData>
+<soc:lastName>Петров</soc:lastName>
+<soc:firstName>Петр</soc:firstName>
+<soc:middleName>Петрович</soc:middleName>
+<soc:birthDate>1998-10-01</soc:birthDate>
+<soc:mrog>город Калининград</soc:mrog>
+</soc:relativeData>
+<soc:relativeDocument>
+<soc:type>21</soc:type>
+<soc:series>2351</soc:series>
+<soc:number>452352</soc:number>
+<soc:issuedBy>УФМС</soc:issuedBy>
+<soc:issueDate>2025-10-01</soc:issueDate>
+<soc:departmentCode>346-363</soc:departmentCode>
+</soc:relativeDocument>
+<soc:relativeAddressLive>
+<soc:fiasHouseCode>42a79fa8-0278-4932-969c-8115f4d65dc3</soc:fiasHouseCode>
+<soc:index>236040</soc:index>
+<soc:town>Калининград</soc:town>
+<soc:street>Горького</soc:street>
+<soc:house>1</soc:house>
+<soc:strAddress>обл. Калининградская, г. Калининград, ул. Горького</soc:strAddress>
+</soc:relativeAddressLive>
+</soc:relative>
+</soc:relatives>
+<!--  Адрес регистрации  -->
+<soc:regAddress>
+<soc:fiasHouseCode>42a79fa8-0278-4932-969c-8115f4d65dc3</soc:fiasHouseCode>
+<soc:index>236040</soc:index>
+<soc:town>Калининград</soc:town>
+<soc:street>Горького</soc:street>
+<soc:house>1</soc:house>
+<soc:strAddress>обл. Калининградская, г. Калининград, ул. Горького, д. 1</soc:strAddress>
+</soc:regAddress>
+<!--  Временный адрес  -->
+<!--  Фактический адрес  -->
+<soc:livingAddress>
+<soc:fiasHouseCode>c4159eec-e653-489d-b14d-0259c3fd50fb</soc:fiasHouseCode>
+<soc:index>236022</soc:index>
+<soc:town>Калининград</soc:town>
+<soc:street>Уральская</soc:street>
+<soc:house>18</soc:house>
+<soc:strAddress>обл. Калининградская, г. Калининград, ул. Уральская</soc:strAddress>
+</soc:livingAddress>
+<!--  Способ получения выплаты  -->
+<soc:payment>
+<soc:BankInfo>
+<soc:bankName>КАЛИНИНГРАДСКОЕ ОТДЕЛЕНИЕ N8626 ПАО СБЕРБАНК г Калининград</soc:bankName>
+<soc:bik>042748634</soc:bik>
+<soc:account>32444444444444478978</soc:account>
+</soc:BankInfo>
+</soc:payment>
+<soc:addInfos>
+<!--  Реквизиты записей актов гражданского состояния  -->
+<soc:addInfo>
+<soc:info name="Причина изменения ФИО получателя услуги" parent="Смена ФИО">Заключение брака</soc:info>
+<soc:info name="Предыдущие ФИО получателя услуги" parent="Смена ФИО">Иванова Ирина Ивановна</soc:info>
+<soc:info name="Отдел ОГКУ «Центр социальной поддержки населения»">ОГКУ ЦСПН Краснознаменск</soc:info>
+</soc:addInfo>
+</soc:addInfos>
+</soc:SetRequest>
+</soc:AppDataRequest>

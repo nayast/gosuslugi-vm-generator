@@ -45,6 +45,7 @@ pip install pyinstaller
 ```bash
 pyinstaller --onefile --windowed ^
 --add-data "assets;assets" ^
+--add-data "core;core" ^
 --icon="icon.ico" ^
 --name="Генератор_VM" ^
 main_window.py
